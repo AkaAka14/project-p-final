@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5178,
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://${process.env.VITE_REACT_APP_API_URL}',
         changeOrigin: true,
         secure: false,
         ws: true

@@ -24,14 +24,41 @@ app.use(cookieParser());
 app.use("/api/v1", router);
 //http://localhost/api/v1/user/signup 
 
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(process.env.DATABASE_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 45000,
+    retryWrites: true,
+    w: 'majority',
+    maxPoolSize: 10,
+    minPoolSize: 5,
+    connectTimeoutMS: 10000,
+    keepAlive: true
 }).then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+    console.log("Connected to MongoDB Atlas");
+    const server = app.listen(port, () => {
+        console.log(`Server is running on port ${port} in ${process.env.NODE_ENV} mode`);
+    });
+
+    // Handle server shutdown
+    process.on('SIGTERM', () => {
+        server.close(() => {
+            mongoose.connection.close();
+            console.log('Server shutdown complete');
+        });
     });
 }).catch((error) => {
-    console.log("Failed to connect to MongoDB:", error.message);
-})
+    console.error("MongoDB connection error:", error.message);
+    process.exit(1);
+});
+
+// Add connection error handler
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+// Add disconnection handler
+mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected');
+});

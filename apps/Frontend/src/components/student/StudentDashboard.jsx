@@ -27,7 +27,7 @@ const StudentDashboard = () => {
       console.log(studentId);
       try {
         console.log(studentId);
-        const response = await axios.get(`http://localhost:3001/api/v1/student/profile/${studentId}`);        console.log("Fetched Student Data:", response);
+        const response = await axios.get(`http://${process.env.VITE_REACT_APP_API_URL}/v1/student/profile/${studentId}`);        console.log("Fetched Student Data:", response);
         console.log(response.data.data)
         setStudentData(response.data.data);
 

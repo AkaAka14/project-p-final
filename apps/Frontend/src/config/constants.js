@@ -1,5 +1,5 @@
 // API Configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://${process.env.VITE_REACT_APP_API_URL}';
 export const API_TIMEOUT = 30000; // 30 seconds
 
 // App Configuration
@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   storagePrefix: 'pms_',
 };
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3001/api/v1',
+  BASE_URL: 'http://${process.env.VITE_REACT_APP_API_URL}/v1',
   TIMEOUT: 10000,
   ENDPOINTS: {
     AUTH: {
