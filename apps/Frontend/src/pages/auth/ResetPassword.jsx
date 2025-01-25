@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../../hooks/useAuth';
-import { useNotification } from '../../hooks/useNotification';
+import { useNotification } from '../../hooks//admin/useNotification';
 import { validatePassword } from '../../utils/validators';
 
 const ResetPassword = () => {
