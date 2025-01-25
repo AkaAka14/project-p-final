@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   storagePrefix: 'pms_',
 };
 export const API_CONFIG = {
-  BASE_URL: 'http://${process.env.VITE_REACT_APP_API_URL}/v1',
+  BASE_URL: 'https://${process.env.VITE_REACT_APP_API_URL}/v1',
   TIMEOUT: 10000,
   ENDPOINTS: {
     AUTH: {

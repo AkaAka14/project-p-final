@@ -61,7 +61,7 @@ const ProfileEdit = () => {
 
     try {
       const response = await axios.put(
-        `http://${process.env.VITE_REACT_APP_API_URL}/api/v1/student/profile/${studentData._id}`,
+        `https://${process.env.VITE_REACT_APP_API_URL}/api/v1/student/profile/${studentData._id}`,
         formData
       );
 
