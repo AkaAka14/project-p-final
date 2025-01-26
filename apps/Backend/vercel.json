@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "testDev": false
+    }
+  },
   "builds": [
     {
       "src": "index.js",
@@ -8,20 +14,22 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/health",
+      "dest": "index.js"
+    },
+    {
+      "src": "/api/v1/(.*)",
+      "dest": "index.js",
       "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
-      },
-      "continue": true
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "https://project-p-final-frontend.vercel.app",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "/index.js"
+      "dest": "index.js"
     }
-  ],
- "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
