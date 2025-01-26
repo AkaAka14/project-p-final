@@ -1,115 +1,94 @@
 import React from "react";
+import Slider from "react-slick";
 import { Box, Typography } from "@mui/material";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const PastRecruiters = () => {
   // Array of company logos (URLs or public folder paths)
   const companyLogos = [
-   
     "/tnp-americanexp.jpg",
     "/tnp-akash.jpg",
     "/amazon-tnp.jpg",
-    
     "/microsoft1-tnp.jpg",
     "/ford-tnp.jpg",
     "/adobe-tnp.jpg",
     "/tnp-delhrivery.jpg",
-    "/tnp-delhrivery.jpg",
-    "/tnp-delhrivery.jpg",
-
   ];
+
+  // Slick slider settings
+  const settings = {
+    infinite: true, // Enables infinite scrolling
+    slidesToShow: 5, // Number of logos visible at a time
+    slidesToScroll: 1, // Logos to scroll per cycle
+    autoplay: true, // Enables auto scrolling
+    autoplaySpeed: 1500, // Cycle time in ms
+    pauseOnHover: true, // Pause when hovered
+    responsive: [
+      {
+        breakpoint: 1024, // For tablets
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 600, // For mobile
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 20px",
+        paddingX: "20px",
+        paddingY: { xs: "20px", sm: "30px", md: "40px", lg: "60px" },
         backgroundColor: "#f7faff",
-        overflow: "hidden",
       }}
     >
       {/* Heading */}
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{
           fontWeight: "bold",
           textAlign: "center",
-          marginBottom: "50px",
+          marginBottom: { xs: "20px", sm: "30px", md: "40px" }, // Responsive bottom margin
           color: "#333",
         }}
       >
         Past Recruiters
       </Typography>
 
-      {/* Scrolling Logo Section */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          overflow: "hidden",
-          marginBottom: "50px",
-          whiteSpace: "nowrap",
-        }}
-      >
-        <Box
-          sx={{
-            display: "inline-flex",
-            animation: "scroll 20s linear infinite",
-          }}
-        >
-          {companyLogos.map((logo, index) => (
+      {/* Carousel Section */}
+      <Slider {...settings}>
+        {companyLogos.map((logo, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Box
-              key={index}
               component="img"
               src={logo}
               alt={`Company ${index + 1}`}
               sx={{
-                maxWidth: "150px",
-                margin: "0 20px",
-                filter: "grayscale(100%)", // Optional: Make logos grayscale for uniformity
+                maxWidth: "120px",
+                margin: "0 auto",
+                filter: "grayscale(100%)", // Optional: Grayscale effect
                 transition: "filter 0.3s ease-in-out",
                 "&:hover": {
-                  filter: "grayscale(0%)", // Highlight logo on hover
+                  filter: "grayscale(0%)", // Highlight on hover
                 },
               }}
             />
-          ))}
-          {/* Duplicate logos to create a seamless scroll */}
-          {companyLogos.map((logo, index) => (
-            <Box
-              key={`duplicate-${index}`}
-              component="img"
-              src={logo}
-              alt={`Company ${index + 1}`}
-              sx={{
-                maxWidth: "150px",
-                margin: "0 20px",
-                filter: "grayscale(100%)",
-                transition: "filter 0.3s ease-in-out",
-                "&:hover": {
-                  filter: "grayscale(0%)",
-                },
-              }}
-            />
-          ))}
-        </Box>
-      </Box>
-
-      {/* Animation Keyframes */}
-      <style>
-        {`
-          @keyframes scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-        `}
-      </style>
+          </Box>
+        ))}
+      </Slider>
     </Box>
   );
 };

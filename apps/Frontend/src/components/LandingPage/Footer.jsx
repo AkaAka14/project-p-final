@@ -1,13 +1,13 @@
 import React from 'react';
-import { Box, Container, Typography, Grid, IconButton, Link } from '@mui/material';
-import { Email, Phone, LinkedIn, Twitter } from '@mui/icons-material';
+import { Box, Container, Typography, Grid, IconButton, Link, List, ListItem, ListItemText } from '@mui/material';
+import { Email, Phone, LinkedIn, Twitter, Instagram, YouTube, Fax } from '@mui/icons-material';
 
 const Footer = () => {
   return (
     <Box
       component="footer"
       sx={{
-        backgroundColor: "#1a237e",
+        backgroundColor: "#606470",
         color: "white",
         py: 6,
         mt: 'auto'
@@ -52,18 +52,52 @@ const Footer = () => {
             </Link>
           </Grid>
 
+          {/* Connect and Additional Links */}
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom>
               Connect With Us
             </Typography>
-            <Box>
+            <Box sx={{ mb: 2 }}>
               <IconButton color="inherit" aria-label="LinkedIn">
                 <LinkedIn />
               </IconButton>
               <IconButton color="inherit" aria-label="Twitter">
                 <Twitter />
               </IconButton>
+              <IconButton color="inherit" aria-label="Instagram">
+                <Instagram />
+              </IconButton>
+              <IconButton color="inherit" aria-label="YouTube">
+                <YouTube />
+              </IconButton>
             </Box>
+
+            <Typography variant="h6" gutterBottom>
+              Important Links
+            </Typography>
+            <List>
+              <ListItem disableGutters>
+                <ListItemText>
+                  <Link href="#iitd-home" color="inherit" underline="hover">
+                    NIT KKR Website
+                  </Link>
+                </ListItemText>
+              </ListItem>
+              <ListItem disableGutters>
+                <ListItemText>
+                  <Link href="#curriculum" color="inherit" underline="hover">
+                    NIT KKR Curriculum
+                  </Link>
+                </ListItemText>
+              </ListItem>
+              <ListItem disableGutters>
+                <ListItemText>
+                  <Link href="#calendar" color="inherit" underline="hover">
+                    Academic Calendar
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </List>
           </Grid>
         </Grid>
 

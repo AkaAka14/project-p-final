@@ -1,43 +1,54 @@
 import React from "react";
 import { Box, Typography, Avatar, Card, CardContent } from "@mui/material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Dummy Data for Team Members
 const teamMembers = [
+  
   {
-    name: "John Doe",
+    name: "Munish Sharma",
+    post: "Training and Placement Officer",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Prof. B.V. Ramana Reddy",
     post: "Director",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Munish Sharma",
-    post: "TNP Coordinator",
+    name: "Prof. R.K. Sharma",
+    post: "Dean | Research & Consultancy ",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Mr. Alex Brown",
-    post: "Faculty Advisor",
+    name: "Prof. Shelly Vadhera",
+    post: "Associate Dean|Industry & International Relations ",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Ms. Lisa Green",
-    post: "Student Representative",
+    name: "Dr. Surender Ontela",
+    post: "Faculty In-charge | Training & Placement ",
     image: "https://via.placeholder.com/150",
   },
   {
-    name: "Mr. Mark Wilson",
-    post: "Placement Officer",
+    name: "Dr. Nidhi Gupta" ,
+    post: "Associate Faculty In-charge | Training & Placement",
     image: "https://via.placeholder.com/150",
   },
 ];
 
-const TeamCarousel = () => {
+const Team = () => {
   // Slick Slider Settings
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+    dots: true, // Enable navigation dots
+    infinite: true, // Infinite looping
+    speed: 500, // Transition speed
+    slidesToShow: 3, // Number of visible slides
+    slidesToScroll: 1, // Number of slides to scroll per swipe
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 2000, // Time (ms) for each slide
     responsive: [
       {
         breakpoint: 1024,
@@ -116,4 +127,4 @@ const TeamCarousel = () => {
   );
 };
 
-export default TeamCarousel;
+export default Team;

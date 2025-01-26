@@ -1,150 +1,204 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
   Box,
   Typography,
-  styled,
   Button,
-  useMediaQuery,
-  useTheme,
   IconButton,
   Container,
   Drawer,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  useMediaQuery,
+  useTheme,
+  Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { motion } from "framer-motion";
-
-const StyledToolbar = styled(Toolbar)({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "0",
-  width: "100%"
-});
-
-const NavButton = styled(Button)(({ theme }) => ({
-  color: "#fff",
-  marginLeft: theme.spacing(2),
-  '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  }
-}));
-
-const LogoSection = styled(Box)({
-  display: "flex",
-  alignItems: "center"
-});
-
-const MenuSection = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  [theme.breakpoints.up('md')]: {
-    marginLeft: 'auto'
-  }
-}));
+import CloseIcon from "@mui/icons-material/Close";
 
 const Navbar = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const menuItems = ['About', 'Recruiters', 'Team', 'Contact'];
+  const menuItems = ["About", "Recruiters", "Team", "Contact"];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // Handle scroll to toggle navbar background and shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const drawer = (
-    <List>
-      {menuItems.map((item) => (
-        <ListItem 
-          button 
-          key={item} 
-          component="a" 
-          href={`#${item.toLowerCase()}`}
-          onClick={handleDrawerToggle}
-        >
-          <ListItemText primary={item} />
-        </ListItem>
-      ))}
-    </List>
+    <Box
+      sx={{
+        width: 250,
+        height: "100%",
+        backgroundColor: "#f7f9fc",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        boxShadow: 2,
+      }}
+    >
+      {/* Close Button */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          p: 2,
+        }}
+      >
+        <IconButton onClick={handleDrawerToggle} sx={{ color: "#2c3e50" }}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
+
+      {/* Menu Items */}
+      <List sx={{ flexGrow: 1, p: 2 }}>
+        {menuItems.map((item) => (
+          <ListItem
+            button
+            key={item}
+            component="a"
+            href={`#${item.toLowerCase()}`}
+            onClick={handleDrawerToggle}
+            sx={{
+              borderRadius: "8px",
+              transition: "all 0.3s",
+              "&:hover": { backgroundColor: "#3498db", color: "white" },
+            }}
+          >
+            <ListItemText
+              primary={item}
+              primaryTypographyProps={{
+                sx: { fontWeight: 600, color: "#2c3e50" },
+              }}
+            />
+          </ListItem>
+        ))}
+      </List>
+
+      {/* Footer Section */}
+      <Divider />
+      <Box sx={{ p: 2, textAlign: "center" }}>
+        <Typography variant="body2" sx={{ color: "#2c3e50" }}>
+          © 2025 Training & Placement Cell
+        </Typography>
+      </Box>
+    </Box>
   );
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: 'rgba(61, 75, 145, 0.95)' }}>
-      <Container maxWidth="lg">
-        <StyledToolbar>
-          <LogoSection>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: scrolled ? "white" : "rgba(255, 255, 255, 0.8)",
+          boxShadow: scrolled ? "0px 2px 10px rgba(0, 0, 0, 0.1)" : "none",
+          transition: "background-color 0.3s, box-shadow 0.3s",
+        }}
+      >
+        <Container maxWidth="lg">
+          <Toolbar
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {/* Logo Section */}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box
                 component="img"
                 src="/nitkkr1.png"
                 alt="NIT KKR Logo"
-                sx={{ 
-                  height: { xs: 40, md: 50 }, 
-                  mr: 2 
-                }}
+                sx={{ height: { xs: 40, md: 50 }, mr: 2 }}
               />
-            </motion.div>
-            <Typography 
-              variant="h6" 
-              component="h1" 
-              sx={{ 
-                fontWeight: 600,
-                fontSize: { xs: '1rem', md: '1.25rem' }
-              }}
-            >
-              Training & Placement Cell
-            </Typography>
-          </LogoSection>
+              <Typography
+                variant="h6"
+                component="h1"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: { xs: "1rem", md: "1.25rem" },
+                  color: scrolled ? "black" : "black", // Ensure text is always visible
+                }}
+              >
+                Training & Placement Cell
+              </Typography>
+            </Box>
 
-          <MenuSection>
+            {/* Menu Section */}
             {isMobile ? (
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
                 edge="end"
                 onClick={handleDrawerToggle}
+                sx={{ color: scrolled ? "black" : "black" }}
               >
                 <MenuIcon />
               </IconButton>
             ) : (
-              <>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
                 {menuItems.map((item) => (
-                  <NavButton 
-                    key={item} 
+                  <Button
+                    key={item}
                     href={`#${item.toLowerCase()}`}
+                    sx={{
+                      color: scrolled ? "black" : "black", // Adjust text color
+                      marginLeft: 2,
+                      "&:hover": { color: "#3498db" },
+                    }}
                   >
                     {item}
-                  </NavButton>
+                  </Button>
                 ))}
-              </>
+              </Box>
             )}
-          </MenuSection>
-        </StyledToolbar>
-      </Container>
+          </Toolbar>
+        </Container>
+      </AppBar>
 
+
+      {/* Modern Fancy Sidebar */}
       {isMobile && (
         <Drawer
           anchor="right"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true // Better mobile performance
+          ModalProps={{ keepMounted: true }}
+          sx={{
+            "& .MuiDrawer-paper": {
+              width: 250,
+              backgroundColor: "#f7f9fc",
+              boxShadow: 5,
+            },
           }}
         >
           {drawer}
         </Drawer>
       )}
-    </AppBar>
+
+      {/* Spacer to prevent hero section from being hidden */}
+      <Box sx={{ height: { xs: "56px" } }} />
+    </>
   );
 };
 
