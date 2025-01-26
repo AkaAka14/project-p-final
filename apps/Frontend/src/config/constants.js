@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   storagePrefix: 'pms_',
 };
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1',
+  BASE_URL:  'http://localhost:3000/api/v1',
   TIMEOUT: 30000,
   ENDPOINTS: {
     AUTH: {
@@ -21,22 +21,36 @@ export const API_CONFIG = {
       PROFILE: '/me',
       FORGOT_PASSWORD: '/forgot-password',
       RESET_PASSWORD: '/reset-password',
-      VERIFY_EMAIL: '/verify-email'
+      VERIFY_EMAIL: '/verify-email',
+      REFRESH_TOKEN: '/refresh-token'
+    },
+    STUDENT: {
+      BASE: '/student',
+      PROFILE: '/student/profile',
+      APPLICATIONS: '/student/applications',
+      RESUME: '/student/resume',
+      COMPLETE_PROFILE: '/student/complete-profile',
+    },
+    COMPANY: {
+      BASE: '/company',
+      PROFILE: '/profile',
+      JOBS: '/jobs'
+    },
+    ADMIN: {
+      BASE: '/admin',
+      DASHBOARD: '/dashboard',
+      USERS: '/users'
     }
   }
 };
-// Auth Configuration
+
 export const AUTH_CONFIG = {
-  tokenKey: 'access_token',
-  refreshTokenKey: 'refresh_token',
-  tokenExpireKey: 'token_expire',
-  endpoints: {
-    login: '/auth/login',
-    register: '/auth/register',
-    forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/reset-password',
-    refreshToken: '/auth/refresh-token',
-    profile: '/auth/profile',
+  STORAGE_KEYS: {
+    ACCESS_TOKEN: 'access_token',
+    REFRESH_TOKEN: 'refresh_token',
+    TOKEN_EXPIRE: 'token_expire',
+    USER_ROLE: 'user_role',
+    USER_ID: 'user_id'
   }
 };
 

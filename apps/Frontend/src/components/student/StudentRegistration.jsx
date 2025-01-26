@@ -57,14 +57,14 @@ const StudentRegistration = () => {
 
     try {
       const response = await axios.post(
-        API_CONFIG.ENDPOINTS.STUDENT.COMPLETE_PROFILE, 
+        `${API_CONFIG.ENDPOINTS.STUDENT.COMPLETE_PROFILE}`, 
         {
           userId,
           personalInfo: formData.personalInfo,
           academics: formData.academics,
         }
       );
-
+      console.log("Profile completion response:", response.data);
       if (response.data.success) {
         const studentId = response.data.data.student._id;
         localStorage.setItem('studentId', studentId);
