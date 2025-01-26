@@ -1,3 +1,6 @@
+import process from "process";
+window.process = process;
+
 // // API Configuration
 export const API_BASE_URL =  process.env.VITE_API_URL || 'http://localhost:3000/api/v1';
 export const API_TIMEOUT = 30000; // 30 seconds
