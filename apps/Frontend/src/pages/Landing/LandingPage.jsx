@@ -9,19 +9,27 @@ import Team from "../../components/LandingPage/Member";
 
 const LandingPage = () => {
   return (
-    <Box sx={{ minHeight: '100vh',  display: 'flex', flexDirection: 'column' }} width='10ovw'>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        width: "100vw", // Ensures the Box spans the full viewport width
+        position: "absolute" // Prevents horizontal scrolling
+      }}
+    >
       <Navbar />
       <HeroSection />
       <Box id="about">
         <About />
       </Box>
       <Box id="team">
-        <Team/>
+        <Team />
       </Box>
       <Box id="recruiters">
         <PastRecruiters />
       </Box>
-      <Footer id="contact"/>
+      <Footer id="contact" />
     </Box>
   );
 };

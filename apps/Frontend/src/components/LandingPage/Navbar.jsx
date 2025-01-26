@@ -24,7 +24,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const menuItems = ["About", "Recruiters", "Team", "Contact"];
+  const menuItems = ["About", "Team", "Recruiters", "Contact"];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -107,74 +107,77 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: scrolled ? "white" : "rgba(255, 255, 255, 0.8)",
-          boxShadow: scrolled ? "0px 2px 10px rgba(0, 0, 0, 0.1)" : "none",
-          transition: "background-color 0.3s, box-shadow 0.3s",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {/* Logo Section */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box
-                component="img"
-                src="/nitkkr1.png"
-                alt="NIT KKR Logo"
-                sx={{ height: { xs: 40, md: 50 }, mr: 2 }}
-              />
-              <Typography
-                variant="h6"
-                component="h1"
-                sx={{
-                  fontWeight: 600,
-                  fontSize: { xs: "1rem", md: "1.25rem" },
-                  color: scrolled ? "black" : "black", // Ensure text is always visible
-                }}
-              >
-                Training & Placement Cell
-              </Typography>
-            </Box>
+    <AppBar
+      sx={{
+        position: scrolled ? "sticky" : "static",
+        top: 0,
+        backgroundColor: scrolled ? "#f0f5ff" : "#f0f5ff",
+        boxShadow: scrolled ? "0px 2px 10px rgba(0, 0, 0, 0.1)" : "none",
+        transition: "background-color 0.3s, box-shadow 0.3s, position 0.3s",
+        zIndex: 1200, // Ensure it stays on top of other elements
+      }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* Logo Section */}
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="img"
+              src="/nitkkr1.png"
+              alt="NIT KKR Logo"
+              sx={{ height: { xs: 40, md: 50 }, mr: 2 }}
+            />
+            <Typography
+              variant="h6"
+              component="h1"
+              sx={{
+                fontWeight: 600,
+                fontSize: { xs: "1rem", md: "1.25rem" },
+                color: scrolled ? "black" : "black", // Ensure text is always visible
+              }}
+            >
+              Training & Placement Cell
+            </Typography>
+          </Box>
 
-            {/* Menu Section */}
-            {isMobile ? (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerToggle}
-                sx={{ color: scrolled ? "black" : "black" }}
-              >
-                <MenuIcon />
-              </IconButton>
-            ) : (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                {menuItems.map((item) => (
-                  <Button
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    sx={{
-                      color: scrolled ? "black" : "black", // Adjust text color
-                      marginLeft: 2,
-                      "&:hover": { color: "#3498db" },
-                    }}
-                  >
-                    {item}
-                  </Button>
-                ))}
-              </Box>
-            )}
-          </Toolbar>
-        </Container>
-      </AppBar>
+          {/* Menu Section */}
+          {isMobile ? (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerToggle}
+              sx={{ color: scrolled ? "black" : "black" }}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              {menuItems.map((item) => (
+                <Button
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  sx={{
+                    color: scrolled ? "black" : "black", // Adjust text color
+                    marginLeft: 2,
+                    "&:hover": { color: "#3498db" },
+                  }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
+
 
 
       {/* Modern Fancy Sidebar */}
@@ -195,9 +198,6 @@ const Navbar = () => {
           {drawer}
         </Drawer>
       )}
-
-      {/* Spacer to prevent hero section from being hidden */}
-      <Box sx={{ height: { xs: "56px" } }} />
     </>
   );
 };

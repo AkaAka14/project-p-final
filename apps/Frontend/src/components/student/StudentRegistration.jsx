@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
+import { API_CONFIG } from "../../config/constants";
+
 
 const StudentRegistration = () => {
   const navigate = useNavigate();
@@ -54,11 +56,14 @@ const StudentRegistration = () => {
     const userId = localStorage.getItem('userId');
 
     try {
-      const response = await axios.post("/student/complete-profile", {
-        userId,
-        personalInfo: formData.personalInfo,
-        academics: formData.academics,
-      });
+      const response = await axios.post(
+        API_CONFIG.ENDPOINTS.STUDENT.COMPLETE_PROFILE, 
+        {
+          userId,
+          personalInfo: formData.personalInfo,
+          academics: formData.academics,
+        }
+      );
 
       if (response.data.success) {
         const studentId = response.data.data.student._id;

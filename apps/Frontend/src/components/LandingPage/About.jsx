@@ -16,7 +16,8 @@ const About = () => {
   return (
     <Box
       sx={{
-        padding: "60px 20px",
+        padding: "60px",
+        paddingTop: { xs: "80px", sm: "80px", md: "80px", lg: "100px" }, 
         backgroundColor: "#f0f5ff",
         display: "flex",
         flexDirection: "column",
@@ -31,12 +32,18 @@ const About = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Typography
-          variant="h4"
+          variant="h3"
           sx={{
             fontWeight: "bold",
             textAlign: "center",
             marginBottom: "20px",
             color: "#2c3e50",
+            fontSize: {
+              xs: "2rem", 
+              sm: "2.5rem", 
+              md: "2.8rem", 
+              lg: "3rem", 
+            },
           }}
         >
           Discover Us
@@ -99,13 +106,34 @@ const About = () => {
                 fontWeight: "bold",
                 color: "#2c3e50",
                 marginBottom: "10px",
+                fontSize: {
+                  xs: "1.2rem", // Small devices
+                  sm: "1.4rem", // Medium devices
+                  md: "1.7rem", // Large devices
+                  lg: "1.7rem", // Extra large devices
+                },
               }}
             >
               Our Mission
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: "#333", textAlign: "justify" }}
+              sx={{
+                color: "#333",
+                textAlign: "justify",
+                fontSize: {
+                  xs: "0.875rem", // Small devices
+                  sm: "1rem", // Medium devices
+                  md: "1.125rem", // Large devices
+                  lg: "1.125rem", // Extra large devices
+                },
+                lineHeight: {
+                  xs: 1.5, // Line height for small devices
+                  sm: 1.6, // Medium devices
+                  md: 1.75, // Large devices
+                  lg: 1.8, // Extra large devices
+                },
+              }}
             >
               The Training and Placement Office at NIT Kurukshetra serves as a
               bridge between academia and industry. We provide students with
@@ -172,13 +200,34 @@ const About = () => {
                 fontWeight: "bold",
                 color: "#2c3e50",
                 marginBottom: "10px",
+                fontSize: {
+                  xs: "1.2rem", // Small devices
+                  sm: "1.4rem", // Medium devices
+                  md: "1.7rem", // Large devices
+                  lg: "1.7rem", // Extra large devices
+                },
               }}
             >
               Our Vision
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: "#333", textAlign: "justify" }}
+              sx={{
+                color: "#333",
+                textAlign: "justify",
+                fontSize: {
+                  xs: "0.875rem", // Small devices
+                  sm: "1rem", // Medium devices
+                  md: "1.125rem", // Large devices
+                  lg: "1.125rem", // Extra large devices
+                },
+                lineHeight: {
+                  xs: 1.5, // Line height for small devices
+                  sm: 1.6, // Medium devices
+                  md: 1.75, // Large devices
+                  lg: 1.8, // Extra large devices
+                },
+              }}
             >
               From campus drives to internships and workshops, we ensure every
               student is well-equipped for the challenges of the industry. Our

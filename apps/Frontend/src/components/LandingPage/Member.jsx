@@ -65,12 +65,27 @@ const Team = () => {
     <Box
       sx={{
         backgroundColor: "#f7faff",
-        padding: "40px 20px",
         textAlign: "center",
+        padding: "60px",
+        paddingTop: { xs: "80px", sm: "100px", md: "100px", lg: "120px" }, 
       }}
     >
       {/* Section Header */}
-      <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: "30px" }}>
+      <Typography
+          variant="h3"
+          sx={{
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "20px",
+            color: "#2c3e50",
+            fontSize: {
+              xs: "2rem", 
+              sm: "2.5rem", 
+              md: "2.8rem", 
+              lg: "3rem", 
+            },
+          }}
+        >
         Meet Our Team
       </Typography>
 

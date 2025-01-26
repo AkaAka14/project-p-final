@@ -14,7 +14,7 @@ export default defineConfig({
     port: 5178,
     proxy: {
       '/api': {
-        target: 'https://tnp-nitkkr.vercel.app',
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
         secure: false
       }

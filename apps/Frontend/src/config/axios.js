@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { store } from '../store';
-import { logout } from '../store/slices/authSlice';
 import { API_CONFIG } from './constants';
 
 const axiosInstance = axios.create({
@@ -8,28 +6,19 @@ const axiosInstance = axios.create({
   timeout: API_CONFIG.TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
   },
-  withCredentials: true
+  withCredentials: false
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    console.log('Request URL:', config.url);
+    console.log('Request Headers:', config.headers);
     return config;
   },
-  (error) => Promise.reject(error)
-);
-
-axiosInstance.interceptors.response.use(
-  (response) => response,
   (error) => {
-    if (error.message === 'Network Error') {
-      console.error('Backend server is not accessible');
-    }
+    console.error('Request Error:', error);
     return Promise.reject(error);
   }
 );

@@ -43,21 +43,27 @@ const PastRecruiters = () => {
   return (
     <Box
       sx={{
-        paddingX: "20px",
-        paddingY: { xs: "20px", sm: "30px", md: "40px", lg: "60px" },
+        paddingTop: { xs: "80px", sm: "100px", md: "100px", lg: "120px" }, 
         backgroundColor: "#f7faff",
+        padding: "60px",
       }}
     >
       {/* Heading */}
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: "bold",
-          textAlign: "center",
-          marginBottom: { xs: "20px", sm: "30px", md: "40px" }, // Responsive bottom margin
-          color: "#333",
-        }}
-      >
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "20px",
+            color: "#2c3e50",
+            fontSize: {
+              xs: "2rem", 
+              sm: "2.5rem", 
+              md: "2.8rem", 
+              lg: "3rem", 
+            },
+          }}
+        >
         Past Recruiters
       </Typography>
 
