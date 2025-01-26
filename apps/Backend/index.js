@@ -9,22 +9,18 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // CORS configuration
-const whitelist = [
-    'http://localhost:5178',
-    'https://tnp-nitkkr.vercel.app'
+
+  const whitelist = [
+    'https://tnp-nitkkr.vercel.app',
+    'http://localhost:5178'
   ];
   
   const corsOptions = {
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: whitelist,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    maxAge: 600
   };
   
   app.use(cors(corsOptions));
