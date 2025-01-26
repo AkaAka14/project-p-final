@@ -30,6 +30,10 @@
       "continue": true
     },
     {
+      "src": "/api/health",
+      "dest": "index.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "index.js"
     }
