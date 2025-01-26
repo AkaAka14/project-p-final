@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 // CORS configuration
 const whitelist = [
     'http://localhost:5178',
-    'https://project-p-final-frontend.vercel.app'
+    'https://tnp-nitkkr.vercel.app'
   ];
   
   const corsOptions = {
