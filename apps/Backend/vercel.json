@@ -22,7 +22,6 @@
     }
   ],
  "env": {
-    "DATABASE_URI": "@database_uri",
     "NODE_ENV": "production"
   }
 }
