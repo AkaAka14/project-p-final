@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import studentController from "../controllers/student/studentController.js";
+import studentController from "../controllers/student/Studentcontroller.js";
 import studentService from "../services/student/studentService.js";
 import studentModel from "../models/studentModel.js";
 

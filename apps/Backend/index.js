@@ -81,8 +81,28 @@ const connectWithRetry = async (retryCount = 0, maxRetries = 5) => {
   connectWithRetry();
   
   // Health check route
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok' });
+  app.get('/api/health', (req, res) => {
+    res.json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      mongodb: mongoose.connection.readyState
+    });
+  });
+  // Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'API is running',
+    message: 'Welcome to Project-P API',
+    version: '1.0.0'
+  });
+});
+  // Error handler
+  app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: err.message
+    });
   });
   
   export default app;
