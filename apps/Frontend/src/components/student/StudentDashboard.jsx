@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axios";
+import { API_CONFIG } from "../../config/constants";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import ApplicationsSection from './sections/Applications/ApplicationSection';
 import Modern from './sections/resume/utils/templates/Modern';
@@ -24,13 +25,9 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       const studentId = localStorage.getItem('studentId');
-      console.log(studentId);
       try {
-        console.log(studentId);
-        const response = await axios.get(`https://${process.env.VITE_REACT_APP_API_URL}/v1/student/profile/${studentId}`);        console.log("Fetched Student Data:", response);
-        console.log(response.data.data)
+        const response = await axios.get(`${API_CONFIG.ENDPOINTS.STUDENT.PROFILE}/${studentId}`);
         setStudentData(response.data.data);
-
       } catch (err) {
         console.error("Error fetching student data:", err);
         setError(err.response?.data?.message || "Failed to fetch student data");
@@ -40,6 +37,7 @@ const StudentDashboard = () => {
     };
     fetchStudent();
   }, []);
+
 console.log(studentData);
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);

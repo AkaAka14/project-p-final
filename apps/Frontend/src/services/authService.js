@@ -39,7 +39,8 @@ const authService = {
     try {
       console.log('Registration data:', userData);
       
-      const response = await api.post('/register', {
+      const response = await api.post(
+        `${API_CONFIG.ENDPOINTS.AUTH.BASE}${API_CONFIG.ENDPOINTS.AUTH.REGISTER}`, {
         email: userData.email,
         password: userData.password,
         user_role: userData.user_role

@@ -14,7 +14,7 @@ export default defineConfig({
     port: 5178,
     proxy: {
       '/api': {
-        target: process.env.VITE_REACT_APP_API_URL,
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
         secure: false
       }
