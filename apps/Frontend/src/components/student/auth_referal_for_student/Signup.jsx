@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../utils/axios";
+import axios from "../axios";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -211,7 +211,7 @@ const Signup = () => {
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
             <a
-              href="/login"
+              href="/auth/student/login"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
               Sign in

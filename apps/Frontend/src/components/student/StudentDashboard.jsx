@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "./axios";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 
 const StudentDashboard = () => {
@@ -23,7 +23,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`/api/v1/student/profile/${id}`);
+        const response = await axios.get(`/student/profile/${id}`);
         setStudent(response.data.data);
       } catch (error) {
         setError(
