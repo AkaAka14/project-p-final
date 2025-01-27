@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useParams, useNavigate } from "react-router-dom";
-import axios from "../../config/axios";
-import { API_CONFIG } from "../../config/constants";
+import axios from "axios";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
-import ApplicationsSection from './sections/Applications/ApplicationSection';
-import Modern from './sections/resume/utils/templates/Modern';
+
 const StudentDashboard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [studentData, setStudentData] = useState(null);
+  const [student, setStudent] = useState(null);
   const [activeTab, setActiveTab] = useState("profile");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,21 +22,20 @@ const StudentDashboard = () => {
 
   useEffect(() => {
     const fetchStudent = async () => {
-      const studentId = localStorage.getItem('studentId');
       try {
-        const response = await axios.get(`${API_CONFIG.ENDPOINTS.STUDENT.PROFILE}/${studentId}`);
-        setStudentData(response.data.data);
-      } catch (err) {
-        console.error("Error fetching student data:", err);
-        setError(err.response?.data?.message || "Failed to fetch student data");
+        const response = await axios.get(`/api/v1/student/profile/${id}`);
+        setStudent(response.data.data);
+      } catch (error) {
+        setError(
+          error.response?.data?.message || "Failed to fetch student data"
+        );
       } finally {
         setLoading(false);
       }
     };
     fetchStudent();
-  }, []);
+  }, [id]);
 
-console.log(studentData);
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
     navigate(`/student/${id}/${tabId}`);
@@ -101,7 +98,7 @@ console.log(studentData);
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2>
             <p className="text-gray-600 mt-1 truncate">
-              Welcome, {studentData?.personalInfo?.name}
+              Welcome, {student?.personalInfo?.name}
             </p>
           </div>
 
@@ -128,15 +125,7 @@ console.log(studentData);
 
         <main className="flex-1 overflow-y-auto p-8 lg:p-10">
           <div className="max-w-7xl mx-auto">
-            {error && <div>{error}</div>}
-            {studentData ? (
-              <ApplicationsSection studentData={studentData} />
-            ) : (
-              <div>Loading student data...</div>
-            )}
-            
-           
-            <Outlet context={{ studentData, setStudentData }} />
+            <Outlet context={{ student, setStudent }} />
           </div>
         </main>
       </div>

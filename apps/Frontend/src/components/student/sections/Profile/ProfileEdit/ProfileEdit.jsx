@@ -18,23 +18,37 @@ import ProjectsEdit from "./ProjectsEdit";
 import ExperienceEdit from "./ExperienceEdit";
 import EducationEdit from "./EducationEdit";
 import AcademicsEdit from "./AcademicsEdit";
+import SecondaryEmailEdit from "./SecondaryEmailEdit";
+import SocialLinksEdit from "./SocialLinks";
+import AcademicsOverallEdit from "./AcademicsOverallEdit";
+import { useEffect } from "react";
 import { Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-  const { studentData, setStudentData } = useOutletContext();
+  const { student, setStudent } = useOutletContext();
   const [formData, setFormData] = useState({
-    personalInfo: studentData?.personalInfo || {},
-    academics: studentData?.academics || {
+    personalInfo: student?.personalInfo || {},
+    academics: student?.academics || {
       cgpa: "",
       tenthMarks: "",
       twelfthMarks: "",
     },
-    skills: studentData?.skills || [],
-    projects: studentData?.projects || [],
-    experience: studentData?.experience || [],
-    education: studentData?.education || [],
+    // Fix academicResults initialization
+    academicResults: student?.academicResults || {
+      semesters: [],
+      isLocked: false,
+    },
+    skills: student?.skills || [],
+    projects: student?.projects || [],
+    experience: student?.experience || [],
+    education: student?.education || [],
+    secondaryEmail: student?.secondaryEmail || [],
+    socialLinks: student?.socialLinks || {
+      github: "",
+      linkedIn: "",
+    },
   });
 
   const [error, setError] = useState("");
@@ -61,15 +75,15 @@ const ProfileEdit = () => {
 
     try {
       const response = await axios.put(
-        `https://${process.env.VITE_API_URL}/api/v1/student/profile/${studentData._id}`,
+        `/api/v1/student/profile/${student._id}`,
         formData
       );
 
       if (response.data.statusCode === 200) {
         setSuccess(true);
-        setStudentData(response.data.data);
+        setStudent(response.data.data);
         setTimeout(() => {
-          navigate(`/student/${studentData._id}`);
+          navigate(`/student/${student._id}`);
         }, 1500);
       }
     } catch (err) {
@@ -163,7 +177,7 @@ const ProfileEdit = () => {
             <div>
               <PersonalInfoEdit
                 data={formData.personalInfo}
-                isLocked={studentData?.personalInfo?.isLocked}
+                isLocked={student?.personalInfo?.isLocked}
                 onChange={(personalInfo) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -178,11 +192,43 @@ const ProfileEdit = () => {
             <div>
               <AcademicsEdit
                 data={formData.academics}
-                isLocked={studentData?.academics?.isLocked}
+                isLocked={student?.academics?.isLocked}
                 onChange={(academics) =>
                   setFormData((prev) => ({
                     ...prev,
                     academics,
+                  }))
+                }
+              />
+            </div>
+          </Grow>
+          {/* overall academic  */}
+          <Grow in timeout={1200}>
+            <div>
+              <AcademicsOverallEdit
+                data={formData.academicResults}
+                isLocked={student?.academicResults?.isLocked}
+                onChange={(academicResults) => {
+                  if (academicResults.error) {
+                    setError(academicResults.error);
+                    return;
+                  }
+                  setFormData((prev) => ({
+                    ...prev,
+                    academicResults,
+                  }));
+                }}
+              />
+            </div>
+          </Grow>
+          <Grow in timeout={1000}>
+            <div>
+              <SecondaryEmailEdit
+                secondaryEmail={formData.secondaryEmail}
+                onChange={(secondaryEmail) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    secondaryEmail,
                   }))
                 }
               />
@@ -238,6 +284,19 @@ const ProfileEdit = () => {
               }
             />
           </motion.div>
+          <Grow in timeout={1000}>
+            <div>
+              <SocialLinksEdit
+                socialLinks={formData.socialLinks}
+                onChange={(socialLinks) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    socialLinks,
+                  }))
+                }
+              />
+            </div>
+          </Grow>
         </motion.div>
       </motion.div>
     </form>

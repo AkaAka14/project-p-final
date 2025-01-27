@@ -20,28 +20,15 @@ import {
   LocationOn,
 } from "@mui/icons-material";
 import { colors } from "./colors";
-import { useOutlet, useOutletContext } from "react-router-dom";
 
-const Professional = () => {
+const Professional = ({ data }) => {
   // Get theme and screen size for responsiveness
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Destructure data props
   const { personalInfo, academics, skills, education, experience, projects } =
-    studentData;
+    data;
 
   // Reusable section title component
   const SectionTitle = ({ children }) => (
@@ -121,10 +108,10 @@ const Professional = () => {
             marginTop: 2,
           }}
         >
-          {studentData.email && (
+          {data.email && (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Email fontSize="small" />
-              {studentData.email}
+              {data.email}
             </Box>
           )}
           {personalInfo.phone && (
@@ -257,7 +244,7 @@ const Professional = () => {
 
 // PropTypes validation
 Professional.propTypes = {
-  studentData: PropTypes.shape({
+  data: PropTypes.shape({
     personalInfo: PropTypes.shape({
       name: PropTypes.string.isRequired,
       department: PropTypes.string.isRequired,
