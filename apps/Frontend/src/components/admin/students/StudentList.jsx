@@ -449,41 +449,80 @@ const StudentList = ({ onStudentSelect }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {students.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell onClick={() => onStudentSelect(student)}>
-                      <Box display="flex" alignItems="center" gap={1}>
-                        <Avatar>
-                          <Person />
-                        </Avatar>
-                        {student.name}
-                      </Box>
-                    </TableCell>
-                    <TableCell onClick={() => onStudentSelect(student)}>{student.rollNo}</TableCell>
-                    <TableCell onClick={() => onStudentSelect(student)}>{student.batch}</TableCell>
-                    <TableCell onClick={() => onStudentSelect(student)}>{student.branch}</TableCell>
-                    <TableCell onClick={() => onStudentSelect(student)}>{student.cgpa}</TableCell>
-                    <TableCell onClick={() => onStudentSelect(student)}>
-                      <Chip
-                        label={student.placementStatus}
-                        color={student.placementStatus === 'Placed' ? 'success' : 'default'}
-                        size="small"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <IconButton size="small" onClick={(event) => handleEditStudent(student, event)}>
-                        <Edit />
-                      </IconButton>
-                      <IconButton size="small" onClick={(event) => handleSendEmail(student, event)}>
-                        <Mail />
-                      </IconButton>
-                      <IconButton size="small" color="error" onClick={(event) => handleDeleteStudent(student, event)}>
-                        <Delete />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+              {students.map((student) => (
+              <TableRow 
+              key={student.id} 
+              sx={{ '&:hover td': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}
+              >
+              <TableCell>
+              <Box 
+              display="flex" 
+              alignItems="center" 
+              gap={1}
+              >
+             <Avatar>
+            <Person />
+          </Avatar>
+          <Typography>{student.name}</Typography>
+        </Box>
+      </TableCell>
+      <TableCell>
+        <Typography>{student.rollNo}</Typography>
+      </TableCell>
+      <TableCell>
+        <Typography>{student.batch}</Typography>
+      </TableCell>
+      <TableCell>
+        <Typography>{student.branch}</Typography>
+      </TableCell>
+      <TableCell>
+        <Typography>{student.cgpa}</Typography>
+      </TableCell>
+      
+     
+      <TableCell>
+        <Chip
+          label={student.placementStatus}
+          color={student.placementStatus === 'Placed' ? 'success' : 'default'}
+          size="small"
+        />
+      </TableCell>
+
+      {/* Actions Column */}
+      <TableCell>
+        <Box display="flex" gap={1}>
+          <Tooltip title="Edit Student">
+            <IconButton 
+              size="small" 
+              onClick={(event) => handleEditStudent(student, event)}
+            >
+              <Edit fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Send Email">
+            <IconButton 
+              size="small" 
+              onClick={(event) => handleSendEmail(student, event)}
+            >
+              <Mail fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Delete Student">
+            <IconButton 
+              size="small" 
+              color="error" 
+              onClick={(event) => handleDeleteStudent(student, event)}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </TableCell>
+    </TableRow>
+  ))}
+</TableBody>
             </Table>
 
             <TablePagination
