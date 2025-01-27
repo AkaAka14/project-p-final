@@ -54,7 +54,7 @@ const Signup = () => {
         academics: formData.academics,
       });
       if (response.data.statusCode === 201) {
-        navigate(`/student-dashboard/${response.data.data.student._id}`);
+        navigate(`/student/${response.data.data.student._id}`);
       }
     } catch (err) {
       console.error("Registration error:", err);

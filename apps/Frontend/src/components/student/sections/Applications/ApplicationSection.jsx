@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Refresh, FilterList } from "@mui/icons-material";
 import ApplicationDetailView from "./ApplicationDetailView";
@@ -27,7 +27,7 @@ const ApplicationsSection = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `/api/v1/student/applications/${studentId}`
+        `/student/applications/${studentId}`
       );
       setApplications(response.data.data);
       setError(null);
