@@ -1,9 +1,11 @@
-import process from "process";
-window.process = process;
+// API Configuration
+const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+const backendPort = import.meta.env.VITE_BACKEND_PORT || '3001';
+const prodApiUrl = 'https://project-p-final-backend.vercel.app/api/v1';
+const devApiUrl = `http://localhost:${backendPort}/api/v1`;
 
-// // API Configuration
-export const API_BASE_URL =  process.env.VITE_API_URL || 'http://localhost:3000/api/v1';
-export const API_TIMEOUT = 30000; // 30 seconds
+export const API_BASE_URL = isProduction ? prodApiUrl : devApiUrl;
+export const API_TIMEOUT = 30000; 
 
 // App Configuration
 export const APP_CONFIG = {
@@ -12,22 +14,26 @@ export const APP_CONFIG = {
   apiUrl: API_BASE_URL,
   storagePrefix: 'pms_',
 };
-export const API_CONFIG = {
-  // BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1',
-  BASE_URL: process.env.VITE_API_URL || 'https://project-p-final-backend.vercel.app/api/v1',
 
-  TIMEOUT: 30000,
+export const API_CONFIG = {
+  BASE_URL: devApiUrl,
+  PROD_URL: prodApiUrl,
+  TIMEOUT: 60000,
+  HEADERS: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
   ENDPOINTS: {
     AUTH: {
       BASE: '/user',
-      LOGIN: '/login',
-      REGISTER: '/register',
-      LOGOUT: '/logout',
-      PROFILE: '/me',
-      FORGOT_PASSWORD: '/forgot-password',
-      RESET_PASSWORD: '/reset-password',
-      VERIFY_EMAIL: '/verify-email',
-      REFRESH_TOKEN: '/refresh-token'
+      LOGIN: '/user/login',
+      REGISTER: '/user/register',
+      LOGOUT: '/user/logout',
+      PROFILE: '/user/me',
+      FORGOT_PASSWORD: '/user/forgot-password',
+      RESET_PASSWORD: '/user/reset-password',
+      VERIFY_EMAIL: '/user/verify-email',
+      REFRESH_TOKEN: '/user/refresh-token'
     },
     STUDENT: {
       BASE: '/student',
@@ -89,4 +95,4 @@ export const DATE_FORMAT = {
   display: 'dd MMM yyyy',
   api: 'yyyy-MM-dd',
   datetime: 'dd MMM yyyy HH:mm',
-}; 
+};
