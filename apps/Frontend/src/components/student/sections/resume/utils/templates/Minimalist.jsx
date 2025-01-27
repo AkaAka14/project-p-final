@@ -16,22 +16,10 @@ import {
   LocationOn,
   LinkedIn,
 } from "@mui/icons-material";
-import { useOutlet, useOutletContext } from "react-router-dom";
 import PropTypes from "prop-types";
-const Minimalist = () => {
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
+const Minimalist = ({ data }) => {
   const { personalInfo, academics, skills, education, experience, projects } =
-    studentData;
+    data;
 
   const SectionTitle = ({ children }) => (
     <Typography
@@ -108,9 +96,9 @@ const Minimalist = () => {
             },
           }}
         >
-          <Link href={`mailto:${studentData.email}`}>
+          <Link href={`mailto:${data.email}`}>
             <Email fontSize="small" />
-            {studentData.email}
+            {data.email}
           </Link>
           <Link href={`tel:${personalInfo.phone}`}>
             <Phone fontSize="small" />
@@ -259,7 +247,7 @@ const Minimalist = () => {
 
 //proptype validation
 Minimalist.propTypes = {
-  studentData: PropTypes.shape({
+  data: PropTypes.shape({
     personalInfo: PropTypes.shape({
       name: PropTypes.string.isRequired,
       rollNumber: PropTypes.number.isRequired,
