@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'process.env': {},
+    __VITE_NODE_ENV__: JSON.stringify(process.env.VITE_NODE_ENV)
+  },
   build: {
     outDir: 'dist',
     sourcemap: false,

@@ -5,7 +5,7 @@ const prodApiUrl = 'https://project-p-final-backend.vercel.app/api/v1';
 const devApiUrl = `http://localhost:${backendPort}/api/v1`;
 
 export const API_BASE_URL = isProduction ? prodApiUrl : devApiUrl;
-export const API_TIMEOUT = 30000;
+export const API_TIMEOUT = 30000; 
 
 // App Configuration
 export const APP_CONFIG = {
@@ -17,7 +17,11 @@ export const APP_CONFIG = {
 
 export const API_CONFIG = {
   BASE_URL: API_BASE_URL,
-  TIMEOUT: 30000,
+  TIMEOUT: 60000,
+  HEADERS: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
   ENDPOINTS: {
     AUTH: {
       BASE: '/user',
