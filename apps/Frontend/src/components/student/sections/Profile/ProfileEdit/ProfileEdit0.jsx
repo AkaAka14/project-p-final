@@ -20,19 +20,19 @@ import EducationEdit from "./EducationEdit";
 import AcademicsEdit from "./AcademicsEdit";
 import { Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
 
-const ProfileEdit = ({ studentData, onCancel }) => {
+const ProfileEdit = ({ student, onCancel }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    personalInfo: studentData?.personalInfo || {},
+    personalInfo: student?.personalInfo || {},
     academics: student?.academics || {
       cgpa: "",
       tenthMarks: "",
       twelfthMarks: "",
     },
-    skills: studentData?.skills || [],
-    projects: studentData?.projects || [],
-    experience: studentData?.experience || [],
-    education: studentData?.education || [],
+    skills: student?.skills || [],
+    projects: student?.projects || [],
+    experience: student?.experience || [],
+    education: student?.education || [],
   });
 
   const [error, setError] = useState("");
@@ -59,14 +59,14 @@ const ProfileEdit = ({ studentData, onCancel }) => {
 
     try {
       const response = await axios.put(
-        `/api/v1/student/profile/${studentData._id}`,
+        `/api/v1/student/profile/${student._id}`,
         formData
       );
 
       if (response.data.statusCode === 200) {
         setSuccess(true);
         setTimeout(() => {
-          navigate(`/student-dashboard/${studentData._id}`);
+          navigate(`/student-dashboard/${student._id}`);
         }, 1500);
       }
     } catch (err) {
@@ -158,7 +158,7 @@ const ProfileEdit = ({ studentData, onCancel }) => {
             <div>
               <PersonalInfoEdit
                 data={formData.personalInfo}
-                isLocked={studentData?.personalInfo?.isLocked}
+                isLocked={student?.personalInfo?.isLocked}
                 onChange={(personalInfo) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -173,7 +173,7 @@ const ProfileEdit = ({ studentData, onCancel }) => {
             <div>
               <AcademicsEdit
                 data={formData.academics}
-                isLocked={studentData?.academics?.isLocked}
+                isLocked={student?.academics?.isLocked}
                 onChange={(academics) =>
                   setFormData((prev) => ({
                     ...prev,

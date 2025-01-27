@@ -5,22 +5,9 @@ import { Search, Refresh, FilterList } from "@mui/icons-material";
 import ApplicationDetailView from "./ApplicationDetailView";
 import ApplicationSkeleton from "./ApplicationSkeleton";
 import { useOutlet, useOutletContext } from "react-router-dom";
-
 const ApplicationsSection = () => {
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
-
-  // const { student, setStudent } = useOutletContext();
-  const studentId = studentData._id;
+  const { student, setStudent } = useOutletContext();
+  const studentId = student._id;
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

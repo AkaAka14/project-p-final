@@ -25,7 +25,7 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
-const ProfileView = ({ studentData, onEdit }) => {
+const ProfileView = ({ student, onEdit }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -58,11 +58,11 @@ const ProfileView = ({ studentData, onEdit }) => {
           <Box className="flex justify-between items-start">
             <Box className="text-white">
               <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
-                {studentData?.personalInfo?.name}
+                {student?.personalInfo?.name}
               </Typography>
               <Typography variant="h6" sx={{ opacity: 0.9 }}>
-                {studentData?.personalInfo?.department} •{" "}
-                {studentData?.personalInfo?.batch}
+                {student?.personalInfo?.department} •{" "}
+                {student?.personalInfo?.batch}
               </Typography>
               <Box className="flex gap-3 mt-3">
                 <IconButton size="small" sx={{ color: "white" }}>
@@ -117,7 +117,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                       CGPA
                     </Typography>
                     <Typography variant="h4" sx={{ fontWeight: 600 }}>
-                      {studentData?.academics?.cgpa}
+                      {student?.academics?.cgpa}
                     </Typography>
                   </Box>
                   <Grid container spacing={2}>
@@ -127,7 +127,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                           Class X
                         </Typography>
                         <Typography variant="h5">
-                          {studentData?.academics?.tenthMarks}%
+                          {student?.academics?.tenthMarks}%
                         </Typography>
                       </Box>
                     </Grid>
@@ -137,7 +137,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                           Class XII
                         </Typography>
                         <Typography variant="h5">
-                          {studentData?.academics?.twelfthMarks}%
+                          {student?.academics?.twelfthMarks}%
                         </Typography>
                       </Box>
                     </Grid>
@@ -168,7 +168,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                   <Code /> Skills
                 </Typography>
                 <Box className="flex flex-wrap gap-2">
-                  {studentData?.skills?.map((skill, index) => (
+                  {student?.skills?.map((skill, index) => (
                     <Chip
                       key={index}
                       label={skill}
@@ -203,7 +203,7 @@ const ProfileView = ({ studentData, onEdit }) => {
               <Assignment /> Projects
             </Typography>
             <Box className="space-y-4">
-              {studentData?.projects?.map((project, index) => (
+              {student?.projects?.map((project, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
@@ -253,7 +253,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                 <Work /> Experience
               </Typography>
               <Box className="space-y-4">
-                {studentData?.experience?.map((exp, index) => (
+                {student?.experience?.map((exp, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
@@ -311,7 +311,7 @@ const ProfileView = ({ studentData, onEdit }) => {
                 <School /> Education
               </Typography>
               <Box className="space-y-4">
-                {studentData?.education?.map((edu, index) => (
+                {student?.education?.map((edu, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
