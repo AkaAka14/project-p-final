@@ -1,36 +1,6 @@
 import axiosInstance from '../config/axios';
 import { API_CONFIG } from '../config/constants';
 
-const getBaseUrl = () => {
-  if (import.meta.env.PROD) {
-    return 'https://project-p-final-backend.vercel.app/api/v1';
-  }
-  return 'http://localhost:3001/api/v1';
-};
-
-const api = axiosInstance.create({
-  baseURL: getBaseUrl(),
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
-
-// Add request interceptor to log requests in production
-api.interceptors.request.use(
-  (config) => {
-    if (import.meta.env.PROD) {
-      console.log('Production API Request:', {
-        url: config.url,
-        method: config.method,
-        baseURL: config.baseURL
-      });
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
 const handleRedirect = (user_role, userId) => {
   switch (user_role) {
     case 'student':
@@ -47,14 +17,6 @@ const handleRedirect = (user_role, userId) => {
       window.location.href = '/admin/dashboard';
   }
 };
-
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.error('API Error:', error.response?.data || error.message);
-    throw error.response?.data || error;
-  }
-);
 
 const authService = {
   register: async (userData) => {
@@ -83,6 +45,7 @@ const authService = {
       console.error('Registration error:', {
         env: import.meta.env.MODE,
         baseUrl: axiosInstance.defaults.baseURL,
+        endpoint: API_CONFIG.ENDPOINTS.AUTH.REGISTER,
         error: error.response?.data || error.message
       });
       throw error;
@@ -96,11 +59,10 @@ const authService = {
         user_role: credentials.user_role
       });
 
-      const response = await axiosInstance.post('/login', {
-        email: credentials.email,
-        password: credentials.password,
-        user_role: credentials.user_role
-      });
+      const response = await axiosInstance.post(
+        API_CONFIG.ENDPOINTS.AUTH.LOGIN,
+        credentials
+      );
 
       console.log('Login response:', response.data);
 
