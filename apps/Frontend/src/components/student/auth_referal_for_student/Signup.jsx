@@ -47,7 +47,7 @@ const Signup = () => {
     setError("");
 
     try {
-      const response = await axios.post("/api/v1/student/register", {
+      const response = await axios.post("/student/register", {
         email: formData.email,
         password: formData.password,
         personalInfo: formData.personalInfo,
