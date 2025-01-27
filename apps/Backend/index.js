@@ -6,10 +6,10 @@ import router from './src/routes/index.js';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001; // Change the port number from 3000 to 3001
 
 // CORS Config
-const whitelist = ['https://tnp-nitkkr.vercel.app', 'http://localhost:5178'];
+const whitelist = ['https://tnp-nitkkr.vercel.app', 'http://localhost:5179'];
 const corsOptions = {
   origin: whitelist,
   credentials: true,
@@ -41,9 +41,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// MongoDB Connection
-const connectWithRetry = async (retryCount = 0, maxRetries = 5) => {
+// MongoDB Connection and Server Startup
+const startServer = async (retryCount = 0, maxRetries = 5) => {
   try {
+    // Connect to MongoDB first
     await mongoose.connect(process.env.DATABASE_URI, {
       serverSelectionTimeoutMS: 60000,
       socketTimeoutMS: 45000,
@@ -54,43 +55,67 @@ const connectWithRetry = async (retryCount = 0, maxRetries = 5) => {
       w: 'majority'
     });
     console.log("Connected to MongoDB Atlas");
-    
-    const server = app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
 
-    server.timeout = 60000; // Increased timeout
+    // Try to find an available port
+    let currentPort = 3001;
+    let server = null;
 
-    // Graceful Shutdown
-    ['SIGTERM', 'SIGINT'].forEach(signal => {
-      process.on(signal, () => {
-        console.log(`${signal} received, starting shutdown`);
-        server.close(async () => {
-          await mongoose.connection.close();
-          console.log('Server shutdown complete');
-          process.exit(0);
+    while (!server && currentPort <= 3010) {
+      try {
+        server = await new Promise((resolve, reject) => {
+          const s = app.listen(currentPort)
+            .on('listening', () => {
+              console.log(`Server running on port ${currentPort}`);
+              resolve(s);
+            })
+            .on('error', (err) => {
+              if (err.code === 'EADDRINUSE') {
+                currentPort++;
+                resolve(null);
+              } else {
+                reject(err);
+              }
+            });
         });
+      } catch (err) {
+        console.error(`Failed to start server on port ${currentPort}:`, err);
+        currentPort++;
+      }
+    }
+
+    if (!server) {
+      throw new Error('No available ports found between 3001 and 3010');
+    }
+
+    // Graceful shutdown
+    ['SIGTERM', 'SIGINT'].forEach(signal => {
+      process.on(signal, async () => {
+        console.log(`${signal} received, starting shutdown`);
+        await server.close();
+        await mongoose.connection.close();
+        console.log('Server shutdown complete');
+        process.exit(0);
       });
     });
 
   } catch (error) {
-    console.error(`MongoDB connection attempt ${retryCount + 1} failed:`, error);
+    console.error('Startup error:', error);
     if (retryCount < maxRetries) {
-      const delay = Math.min(1000 * Math.pow(2, retryCount), 10000);
-      console.log(`Retrying in ${delay/1000} seconds...`);
-      setTimeout(() => connectWithRetry(retryCount + 1, maxRetries), delay);
+      console.log(`Retrying in 5 seconds... (${retryCount + 1}/${maxRetries})`);
+      setTimeout(() => startServer(retryCount + 1, maxRetries), 5000);
     } else {
-      console.error("Max retry attempts reached. Exiting...");
+      console.error('Max retries reached. Exiting...');
       process.exit(1);
     }
   }
 };
 
+// Handle MongoDB disconnection
 mongoose.connection.on('disconnected', () => {
-  console.log('MongoDB disconnected. Attempting to reconnect...');
-  connectWithRetry();
+  console.log('MongoDB disconnected!');
 });
 
-connectWithRetry();
+// Start the server
+startServer();
 
 export default app;
