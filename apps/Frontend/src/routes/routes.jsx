@@ -5,6 +5,7 @@ const Dashboard = lazy(() => import('../pages/admin/Dashboard'));
 const Students = lazy(() => import('../pages/admin/Students'));
 const Companies = lazy(() => import('../pages/admin/Companies'));
 const JNF = lazy(() => import('../pages/admin/JNF'));
+const JNFManagement = lazy(() => import('../pages/admin/JNFManagement'));
 const Placements = lazy(() => import('../pages/admin/Placements'));
 const Templates = lazy(() => import('../pages/admin/Templates'));
 const Reports = lazy(() => import('../pages/admin/Reports'));
@@ -45,7 +46,7 @@ const routes = [
       },
       {
         path: 'jnf',        // Added JNF route
-        element: JNF,
+        element: JNFManagement,
       },
       {
         path: 'placements',
