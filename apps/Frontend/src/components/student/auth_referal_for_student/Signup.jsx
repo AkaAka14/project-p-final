@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axios";
+import axios from "../axios";
 
-const StudentRegistration = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    email: "",
+    password: "",
     personalInfo: {
       name: "",
       rollNumber: "",
@@ -19,13 +21,6 @@ const StudentRegistration = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      navigate('/auth/student/login');
-    }
-  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,24 +46,19 @@ const StudentRegistration = () => {
     setLoading(true);
     setError("");
 
-    const userId = localStorage.getItem('userId');
-
     try {
-      const response = await axios.post("/student/complete-profile", {
-        userId,
+      const response = await axios.post("/student/register", {
+        email: formData.email,
+        password: formData.password,
         personalInfo: formData.personalInfo,
         academics: formData.academics,
       });
-
-      if (response.data.success) {
-        const studentId = response.data.data.student._id;
-        localStorage.setItem('studentId', studentId);
-        localStorage.setItem('studentProfile', JSON.stringify(response.data.data.student));
-        navigate(`/student/profile/${studentId}`);
+      if (response.data.statusCode === 201) {
+        navigate(`/student/${response.data.data.student._id}`);
       }
     } catch (err) {
-      console.error("Profile completion error:", err);
-      setError(err.response?.data?.message || "Failed to complete profile");
+      console.error("Registration error:", err);
+      setError(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -79,7 +69,7 @@ const StudentRegistration = () => {
       <div className="max-w-md w-full mx-auto space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Complete Student Profile
+            Student Registration
           </h2>
         </div>
 
@@ -127,7 +117,6 @@ const StudentRegistration = () => {
                   <option value="CSE">Computer Engineering</option>
                   <option value="ECE">Electronics & Communication</option>
                   <option value="ME">Mechanical Engineering</option>
-                  <option value="CE">Civil Engineering</option>
                   {/* Add other departments */}
                 </select>
               </div>
@@ -183,6 +172,28 @@ const StudentRegistration = () => {
                 />
               </div>
             </div>
+
+            <h3 className="text-lg font-medium mt-6">Account Information</h3>
+            <div className="space-y-4">
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="Email address"
+                value={formData.email}
+                onChange={handleChange}
+                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              />
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
           </div>
 
           <button
@@ -192,12 +203,24 @@ const StudentRegistration = () => {
               loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
           >
-            {loading ? "Completing Profile..." : "Complete Profile"}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{" "}
+            <a
+              href="/auth/student/login"
+              className="font-medium text-blue-600 hover:text-blue-500"
+            >
+              Sign in
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default StudentRegistration;
+export default Signup;

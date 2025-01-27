@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Refresh, FilterList } from "@mui/icons-material";
 import ApplicationDetailView from "./ApplicationDetailView";
 import ApplicationSkeleton from "./ApplicationSkeleton";
 import { useOutlet, useOutletContext } from "react-router-dom";
-
 const ApplicationsSection = () => {
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
-
-  // const { student, setStudent } = useOutletContext();
-  const studentId = studentData._id;
+  const { student, setStudent } = useOutletContext();
+  const studentId = student._id;
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -40,7 +27,7 @@ const ApplicationsSection = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `/api/v1/student/applications/${studentId}`
+        `/student/applications/${studentId}`
       );
       setApplications(response.data.data);
       setError(null);

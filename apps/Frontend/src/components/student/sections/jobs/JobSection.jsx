@@ -10,7 +10,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import axios from "axios";
+import axios from "../../axios";
 
 const JobSection = ({ studentId }) => {
   const [jobs, setJobs] = useState([]);
@@ -25,7 +25,7 @@ const JobSection = ({ studentId }) => {
   const fetchEligibleJobs = async () => {
     try {
       const response = await axios.get(
-        `/api/v1/student/eligible-jobs/${studentId}`
+        `/student/eligible-jobs/${studentId}`
       );
       setJobs(response.data.data);
     } catch (err) {
@@ -38,7 +38,7 @@ const JobSection = ({ studentId }) => {
   const handleApply = async (jobId) => {
     try {
       setApplying(jobId);
-      await axios.post(`/api/v1/student/apply/${studentId}/${jobId}`);
+      await axios.post(`/student/apply/${studentId}/${jobId}`);
       // Refresh jobs list
       fetchEligibleJobs();
     } catch (err) {

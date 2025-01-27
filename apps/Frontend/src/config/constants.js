@@ -1,6 +1,11 @@
 // API Configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://${process.env.VITE_REACT_APP_API_URL}';
-export const API_TIMEOUT = 30000; // 30 seconds
+const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+const backendPort = import.meta.env.VITE_BACKEND_PORT || '3002';
+const prodApiUrl = 'https://project-p-final-backend.vercel.app/api/v1';
+const devApiUrl = `http://localhost:${backendPort}/api/v1`;
+
+export const API_BASE_URL = isProduction ? prodApiUrl : devApiUrl;
+export const API_TIMEOUT = 30000; 
 
 // App Configuration
 export const APP_CONFIG = {
@@ -9,34 +14,54 @@ export const APP_CONFIG = {
   apiUrl: API_BASE_URL,
   storagePrefix: 'pms_',
 };
+
 export const API_CONFIG = {
-  BASE_URL: 'https://${process.env.VITE_REACT_APP_API_URL}/v1',
-  TIMEOUT: 10000,
+  BASE_URL: devApiUrl,
+  PROD_URL: prodApiUrl,
+  TIMEOUT: 60000,
+  HEADERS: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
   ENDPOINTS: {
     AUTH: {
       BASE: '/user',
-      LOGIN: '/login',
-      REGISTER: '/register',
-      LOGOUT: '/logout',
-      PROFILE: '/me',
-      FORGOT_PASSWORD: '/forgot-password',
-      RESET_PASSWORD: '/reset-password',
-      VERIFY_EMAIL: '/verify-email'
+      LOGIN: '/user/login',
+      REGISTER: '/user/register',
+      LOGOUT: '/user/logout',
+      PROFILE: '/user/me',
+      FORGOT_PASSWORD: '/user/forgot-password',
+      RESET_PASSWORD: '/user/reset-password',
+      VERIFY_EMAIL: '/user/verify-email',
+      REFRESH_TOKEN: '/user/refresh-token'
+    },
+    STUDENT: {
+      BASE: '/student',
+      PROFILE: '/student/profile',
+      APPLICATIONS: '/student/applications',
+      RESUME: '/student/resume',
+      COMPLETE_PROFILE: '/student/complete-profile',
+    },
+    COMPANY: {
+      BASE: '/company',
+      PROFILE: '/profile',
+      JOBS: '/jobs'
+    },
+    ADMIN: {
+      BASE: '/admin',
+      DASHBOARD: '/dashboard',
+      USERS: '/users'
     }
   }
 };
-// Auth Configuration
+
 export const AUTH_CONFIG = {
-  tokenKey: 'access_token',
-  refreshTokenKey: 'refresh_token',
-  tokenExpireKey: 'token_expire',
-  endpoints: {
-    login: '/auth/login',
-    register: '/auth/register',
-    forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/reset-password',
-    refreshToken: '/auth/refresh-token',
-    profile: '/auth/profile',
+  STORAGE_KEYS: {
+    ACCESS_TOKEN: 'access_token',
+    REFRESH_TOKEN: 'refresh_token',
+    TOKEN_EXPIRE: 'token_expire',
+    USER_ROLE: 'user_role',
+    USER_ID: 'user_id'
   }
 };
 
@@ -70,4 +95,4 @@ export const DATE_FORMAT = {
   display: 'dd MMM yyyy',
   api: 'yyyy-MM-dd',
   datetime: 'dd MMM yyyy HH:mm',
-}; 
+};

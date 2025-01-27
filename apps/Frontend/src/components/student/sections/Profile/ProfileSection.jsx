@@ -6,21 +6,21 @@ import axios from "axios";
 import { useState } from "react";
 const ProfileSection = () => {
   const navigate = useNavigate();
-  const { studentData, setstudentData } = useOutletContext();
+  const { student, setStudent } = useOutletContext();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
     navigate("edit");
   };
-console.log(studentData,"rttyui");
+
   const handleUpdate = async (updatedData) => {
     try {
       const response = await axios.put(
-        `/api/v1/student/profile/${studentData._id}`,
+        `/api/v1/student/profile/${student._id}`,
         updatedData
       );
       if (response.data.statusCode === 200) {
-        studentData(response.data.data);
+        setStudent(response.data.data);
         setIsEditing(false);
       }
     } catch (error) {
@@ -30,12 +30,12 @@ console.log(studentData,"rttyui");
 
   return isEditing ? (
     <ProfileEdit
-    studentData={studentData}
+      student={student}
       onUpdate={handleUpdate}
       onCancel={() => setIsEditing(false)}
     />
   ) : (
-    <ProfileView studentData={studentData} onEdit={handleEdit} />
+    <ProfileView student={student} onEdit={handleEdit} />
   );
 };
 
