@@ -8,7 +8,7 @@ const getBaseUrl = () => {
   return 'http://localhost:3001/api/v1';
 };
 
-const api = axios.create({
+const api = axiosInstance.create({
   baseURL: getBaseUrl(),
   withCredentials: true,
   headers: {
@@ -59,13 +59,14 @@ api.interceptors.response.use(
 const authService = {
   register: async (userData) => {
     try {
+      console.log('Environment:', import.meta.env.MODE);
+      console.log('API Base URL:', axiosInstance.defaults.baseURL);
+      
       const response = await axiosInstance.post(
         API_CONFIG.ENDPOINTS.AUTH.REGISTER,
         userData
       );
-      console.log('Environment:', import.meta.env.MODE);
-      console.log('API Base URL:', getBaseUrl());
-      
+
       console.log('Raw registration response:', response);
 
       if (response.data.success || response.status === 201) {
@@ -81,7 +82,7 @@ const authService = {
     } catch (error) {
       console.error('Registration error:', {
         env: import.meta.env.MODE,
-        baseUrl: getBaseUrl(),
+        baseUrl: axiosInstance.defaults.baseURL,
         error: error.response?.data || error.message
       });
       throw error;
