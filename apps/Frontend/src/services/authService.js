@@ -1,8 +1,15 @@
 import axios from 'axios';
 import { API_CONFIG } from '../config/constants';
 
+const getBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    return API_CONFIG.PROD_URL || 'https://your-production-api-url.com';
+  }
+  return API_CONFIG.BASE_URL;
+};
+
 const api = axios.create({
-  baseURL: API_CONFIG.BASE_URL + '/user',
+  baseURL: getBaseUrl() + '/user',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
@@ -37,18 +44,25 @@ api.interceptors.response.use(
 const authService = {
   register: async (userData) => {
     try {
-      console.log('Registration data:', userData);
+      console.log('Environment:', import.meta.env.MODE);
+      console.log('API Base URL:', getBaseUrl());
       
       const response = await api.post(
-        `${API_CONFIG.ENDPOINTS.AUTH.REGISTER}`, {
-        email: userData.email,
-        password: userData.password,
-        user_role: userData.user_role
-      });
+        `${API_CONFIG.ENDPOINTS.AUTH.REGISTER}`, 
+        userData,  // Send complete userData object
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          validateStatus: function (status) {
+            return status < 500; // Resolve only if status is less than 500
+          }
+        }
+      );
 
-      console.log('Registration response:', response.data);
+      console.log('Raw registration response:', response);
 
-      if (response.data.success || response.data.statusCode === 201) {
+      if (response.data.success || response.status === 201) {
         const loginResponse = await authService.login({
           email: userData.email,
           password: userData.password,
@@ -57,9 +71,13 @@ const authService = {
         return loginResponse;
       }
 
-      return response.data;
+      throw new Error(response.data.message || 'Registration failed');
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error('Registration error:', {
+        env: import.meta.env.MODE,
+        baseUrl: getBaseUrl(),
+        error: error.response?.data || error.message
+      });
       throw error;
     }
   },
