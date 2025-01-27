@@ -1,6 +1,11 @@
-// // API Configuration
-export const API_BASE_URL =  process.env.VITE_API_URL || 'http://localhost:3000/api/v1';
-export const API_TIMEOUT = 30000; // 30 seconds
+// API Configuration
+const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+const backendPort = import.meta.env.VITE_BACKEND_PORT || '3001';
+const prodApiUrl = 'https://project-p-final-backend.vercel.app/api/v1';
+const devApiUrl = `http://localhost:${backendPort}/api/v1`;
+
+export const API_BASE_URL = isProduction ? prodApiUrl : devApiUrl;
+export const API_TIMEOUT = 30000;
 
 // App Configuration
 export const APP_CONFIG = {
@@ -9,10 +14,9 @@ export const APP_CONFIG = {
   apiUrl: API_BASE_URL,
   storagePrefix: 'pms_',
 };
-export const API_CONFIG = {
-  // BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1',
-  BASE_URL: process.env.VITE_API_URL || 'https://project-p-final-backend.vercel.app/api/v1',
 
+export const API_CONFIG = {
+  BASE_URL: API_BASE_URL,
   TIMEOUT: 30000,
   ENDPOINTS: {
     AUTH: {
@@ -86,4 +90,4 @@ export const DATE_FORMAT = {
   display: 'dd MMM yyyy',
   api: 'yyyy-MM-dd',
   datetime: 'dd MMM yyyy HH:mm',
-}; 
+};
