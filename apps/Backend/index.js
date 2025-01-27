@@ -9,9 +9,22 @@ const app = express();
 const port = process.env.PORT || 3001; // Change the port number from 3000 to 3001
 
 // CORS Config
-const whitelist = ['https://tnp-nitkkr.vercel.app', 'http://localhost:5179'];
+const whitelist = [
+  'https://tnp-nitkkr.vercel.app', 
+  'http://localhost:5178',
+  'http://localhost:5179',
+  'https://project-p-final-frontend.vercel.app'
+];
+
 const corsOptions = {
-  origin: whitelist,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -32,12 +45,20 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/v1', router);
 
-// Error Handler
+// Enhanced Error Handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  res.status(500).json({
+  console.error('Detailed Error:', {
+    error: err,
+    stack: err.stack,
+    body: req.body,
+    path: req.path,
+    method: req.method
+  });
+
+  res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: err.message || 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? err : undefined
   });
 });
 
