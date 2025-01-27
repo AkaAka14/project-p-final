@@ -1,5 +1,5 @@
 // API Configuration
-const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+const isProduction = import.meta.env.PROD;
 const backendPort = import.meta.env.VITE_BACKEND_PORT || '3002';
 const prodApiUrl = 'https://project-p-final-backend.vercel.app/api/v1';
 const devApiUrl = `http://localhost:${backendPort}/api/v1`;
@@ -16,7 +16,7 @@ export const APP_CONFIG = {
 };
 
 export const API_CONFIG = {
-  BASE_URL: devApiUrl,
+  BASE_URL: isProduction ? prodApiUrl : devApiUrl,
   PROD_URL: prodApiUrl,
   TIMEOUT: 60000,
   HEADERS: {
@@ -37,6 +37,7 @@ export const API_CONFIG = {
     },
     STUDENT: {
       BASE: '/student',
+      REGISTER: '/student/register',
       PROFILE: '/student/profile',
       APPLICATIONS: '/student/applications',
       RESUME: '/student/resume',

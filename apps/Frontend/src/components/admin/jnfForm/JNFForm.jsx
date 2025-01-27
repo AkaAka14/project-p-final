@@ -30,6 +30,7 @@ import ReviewStep from './steps/ReviewStep';
 import SelectionProcessStep from './steps/SelectionProcessSteps';
 import EligibleBranchesStep from './steps/EligibleBranchesStep';
 import AdditionalDetailsStep from './steps/AdditionalDetailsStep';
+import useJNFData from '../../../hooks/admin/useJNFData';
 
 const steps = [
     { number: 1, title: 'Company Details', icon: BusinessIcon },
@@ -40,18 +41,18 @@ const steps = [
     { number: 6, title: 'Review', icon: PreviewIcon }
 ];
 
-const index = () => {
+const JNFForm = () => {
     const theme = useTheme();
     const [currentStep, setCurrentStep] = useState(1);
+    const {addNewEntry, error } = useJNFData();
     const [formData, setFormData] = useState({
         // Company Details
-        name: '',
-        email: '',
-        website: '',
-        companyType: '',
-        domain: '',
-        description: '',
-
+            name: '',
+            email: '',
+            website: '',
+            companyType: '',
+            domain: '',
+            description: '',
         // Job Profiles
         jobProfiles: [
             {
@@ -146,31 +147,8 @@ const index = () => {
                 { department: 'Civil Engineering', specialization: 'Water Resources Engineering', eligible: false },
                 { department: 'Physics', specialization: 'Instrumentation', eligible: false },
                 { department: 'Physics', specialization: 'Nanomaterials and Nanotechnology', eligible: false },
-                { department: 'Master of Computer Applications (MCA)', eligible: false },
-                { department: 'Master of Business Administration (MBA)', eligible: false },
-            ],
-            phd: [
-                { department: 'Computer Science & Engineering', specialization: 'Artificial Intelligence & Machine Learning', eligible: false },
-                { department: 'Computer Science & Engineering', specialization: 'Data Science', eligible: false },
-                { department: 'Computer Science & Engineering', specialization: 'Cybersecurity', eligible: false },
-                { department: 'Electronics & Communication', specialization: 'VLSI Design', eligible: false },
-                { department: 'Electronics & Communication', specialization: 'Communication Systems', eligible: false },
-                { department: 'Electronics & Communication', specialization: 'Signal Processing', eligible: false },
-                { department: 'Electrical Engineering', specialization: 'Power Systems', eligible: false },
-                { department: 'Electrical Engineering', specialization: 'Control Systems', eligible: false },
-                { department: 'Electrical Engineering', specialization: 'Renewable Energy', eligible: false },
-                { department: 'Mechanical Engineering', specialization: 'Thermal Engineering', eligible: false },
-                { department: 'Mechanical Engineering', specialization: 'Manufacturing Systems', eligible: false },
-                { department: 'Mechanical Engineering', specialization: 'Robotics', eligible: false },
-                { department: 'Civil Engineering', specialization: 'Structural Engineering', eligible: false },
-                { department: 'Civil Engineering', specialization: 'Environmental Engineering', eligible: false },
-                { department: 'Civil Engineering', specialization: 'Transportation Engineering', eligible: false },
-                { department: 'Physics', specialization: 'Quantum Computing', eligible: false },
-                { department: 'Physics', specialization: 'Materials Science', eligible: false },
-                { department: 'Chemistry', specialization: 'Polymer Chemistry', eligible: false },
-                { department: 'Chemistry', specialization: 'Analytical Chemistry', eligible: false },
-                { department: 'Mathematics', specialization: 'Applied Mathematics', eligible: false },
-                { department: 'Mathematics', specialization: 'Computational Mathematics', eligible: false }
+                { department: 'Master of Computer Applications (MCA)', specialization: 'Master of Computer Applications (MCA)', eligible: false },
+                { department: 'Master of Business Administration (MBA)', specialization: 'Master of Business Administration (MBA)', eligible: false },
             ]
         },
 
@@ -202,6 +180,12 @@ const index = () => {
                 mobile: '',
                 email: ''
             },
+            {
+                name: '',
+                designation: '',
+                mobile: '',
+                email: ''
+            }
         ],
         additionalInfo: {
             sponsorEvents: '',
@@ -275,12 +259,14 @@ const index = () => {
         }));
     };
 
-    const handlePointOfContactChange = (updatedContacts) => {
-        setFormData(prev => ({
-          ...prev,
-          pointOfContact: updatedContacts
+    const handlePointOfContactChange = (index, field, value) => {
+        setFormData((prev) => ({
+            ...prev,
+            pointOfContact: prev.pointOfContact.map((contact, i) =>
+                i === index ? { ...contact, [field]: value } : contact
+            )
         }));
-      };
+    };
 
     const handleAdditionalInfoChange = (field, value) => {
         setFormData((prev) => ({
@@ -293,7 +279,26 @@ const index = () => {
     };
 
     const handleSubmit = () => {
-        console.log('Form submitted', formData);
+        try {
+            // Pass the form data to the `addNewEntry` function from the hook
+            const isAdded = addNewEntry(formData);
+
+            if (isAdded) {
+                console.log('New entry added successfully.');
+                alert('Form submitted successfully!');
+                // Optionally, reset the form or navigate to another page
+                setFormData({
+                    // Reset formData structure
+                });
+                setCurrentStep(1); // Reset to the first step
+            } else {
+                console.error('Failed to add a new entry.');
+                alert('Submission failed. Please try again.');
+            }
+        } catch (err) {
+            console.error('Error during submission:', err.message);
+            alert(`Submission failed: ${err.message}`);
+        }
     };
 
     const renderStep = () => {
@@ -467,7 +472,7 @@ const index = () => {
                             <Button
                                 variant="contained"
                                 color="success"
-                                onClick={() => console.log('Form submitted', formData)}
+                                onClick={handleSubmit}
                                 sx={{ minWidth: 120 }}
                             >
                                 Submit
@@ -488,4 +493,4 @@ const index = () => {
     );
 };
 
-export default index;
+export default JNFForm;

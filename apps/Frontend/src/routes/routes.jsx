@@ -173,6 +173,7 @@ const Dashboard = lazy(() => import("../pages/admin/Dashboard"));
 const Students = lazy(() => import("../pages/admin/Students"));
 const Companies = lazy(() => import("../pages/admin/Companies"));
 const JNF = lazy(() => import("../pages/admin/JNF"));
+const JNFManagement = lazy(() => import("../pages/admin/JNFManagement"));
 const Placements = lazy(() => import("../pages/admin/Placements"));
 const Templates = lazy(() => import("../pages/admin/Templates"));
 const Reports = lazy(() => import("../pages/admin/Reports"));
@@ -202,23 +203,26 @@ const routes = [
   {
     path: "/admin",
     children: [
-      { path: "dashboard", element: Dashboard },
-      { path: "students", element: Students },
-      { path: "companies", element: Companies },
-      { path: "jnf", element: JNF },
-      { path: "placements", element: Placements },
-      { path: "notifications", element: Notifications },
-      { path: "templates", element: Templates },
-      { path: "automation", element: Automation },
-      { path: "audit", element: Audit },
-      { path: "reports", element: Reports },
-      { path: "profile", element: Profile },
-      { path: "settings", element: Settings },
-    ],
-  },
-  {
-    path: "/auth",
-    children: [
+      {
+        path: 'dashboard',
+        element: Dashboard,
+      },
+      {
+        path: 'students',
+        element: Students,
+      },
+      {
+        path: 'companies',
+        element: Companies,
+      },
+      {
+        path: 'jnf',        // Added JNF route
+        element: JNFManagement,
+      },
+      {
+        path: 'placements',
+        element: Placements,
+      },
       {
         path: "student",
         children: [
