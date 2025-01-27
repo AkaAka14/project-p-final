@@ -34,6 +34,18 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Base Route Handler
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Backend API is running',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/v1/user/*',
+      status: '/api/v1/status'
+    }
+  });
+});
+
 // Health Check
 app.get('/api/health', (req, res) => {
   res.json({
@@ -59,6 +71,14 @@ app.use((err, req, res, next) => {
     success: false,
     message: err.message || 'Internal Server Error',
     error: process.env.NODE_ENV === 'development' ? err : undefined
+  });
+});
+
+// Handle 404
+app.use((req, res) => {
+  res.status(404).json({ 
+    success: false,
+    message: 'Route not found' 
   });
 });
 
