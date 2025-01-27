@@ -19,26 +19,10 @@ import {
 } from "@mui/icons-material";
 import { colors } from "./colors";
 import PropTypes from "prop-types";
-import { useOutlet, useOutletContext } from "react-router-dom";
 
-const Modern = () => {
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
-  console.log("Student Data:", studentData);
-  if (!studentData) {
-    return <div>No data available.</div>; // Handle the case where data is undefined
-  }
+const Modern = ({ data }) => {
   const { personalInfo, academics, skills, education, experience, projects } =
-  studentData;
+    data;
 
   const renderSectionTitle = (title) => (
     <Typography
@@ -161,7 +145,7 @@ const Modern = () => {
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
               <Email fontSize="small" />
-              {studentData.email}
+              {data.email}
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
               <Phone fontSize="small" />
@@ -293,7 +277,7 @@ const Modern = () => {
 };
 
 Modern.propTypes = {
-  studentData: PropTypes.shape({
+  data: PropTypes.shape({
     personalInfo: PropTypes.shape({
       name: PropTypes.string.isRequired,
       rollNumber: PropTypes.number.isRequired,

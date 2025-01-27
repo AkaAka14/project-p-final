@@ -17,21 +17,9 @@ import {
   LocationOn,
 } from "@mui/icons-material";
 import PropTypes from "prop-types";
-import { useOutlet, useOutletContext } from "react-router-dom";
-const Creative = () => {
-  const context = useOutletContext();
-  
-  if (!context) {
-    return <div></div>;
-  }
-
-  const { studentData } = context;
-
-  if (!studentData) {
-    return <div>Loading student data...</div>;
-  }
+const Creative = ({ data }) => {
   const { personalInfo, academics, skills, education, experience, projects } =
-    studentData;
+    data;
 
   const SectionTitle = ({ children }) => (
     <Typography
@@ -116,7 +104,7 @@ const Creative = () => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <Email fontSize="small" />
-            {studentData.email}
+            {data.email}
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <Phone fontSize="small" />
