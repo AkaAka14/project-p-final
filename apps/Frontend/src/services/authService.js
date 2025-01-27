@@ -1,20 +1,35 @@
-import axios from 'axios';
+import axiosInstance from '../config/axios';
 import { API_CONFIG } from '../config/constants';
 
 const getBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return API_CONFIG.PROD_URL || 'https://your-production-api-url.com';
+    return 'https://project-p-final-backend.vercel.app/api/v1';
   }
-  return API_CONFIG.BASE_URL;
+  return 'http://localhost:3001/api/v1';
 };
 
 const api = axios.create({
-  baseURL: getBaseUrl() + '/user',
+  baseURL: getBaseUrl(),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
   }
 });
+
+// Add request interceptor to log requests in production
+api.interceptors.request.use(
+  (config) => {
+    if (import.meta.env.PROD) {
+      console.log('Production API Request:', {
+        url: config.url,
+        method: config.method,
+        baseURL: config.baseURL
+      });
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 const handleRedirect = (user_role, userId) => {
   switch (user_role) {
@@ -44,22 +59,13 @@ api.interceptors.response.use(
 const authService = {
   register: async (userData) => {
     try {
+      const response = await axiosInstance.post(
+        API_CONFIG.ENDPOINTS.AUTH.REGISTER,
+        userData
+      );
       console.log('Environment:', import.meta.env.MODE);
       console.log('API Base URL:', getBaseUrl());
       
-      const response = await api.post(
-        `${API_CONFIG.ENDPOINTS.AUTH.REGISTER}`, 
-        userData,  // Send complete userData object
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          validateStatus: function (status) {
-            return status < 500; // Resolve only if status is less than 500
-          }
-        }
-      );
-
       console.log('Raw registration response:', response);
 
       if (response.data.success || response.status === 201) {
@@ -89,7 +95,7 @@ const authService = {
         user_role: credentials.user_role
       });
 
-      const response = await api.post('/login', {
+      const response = await axiosInstance.post('/login', {
         email: credentials.email,
         password: credentials.password,
         user_role: credentials.user_role
@@ -125,7 +131,7 @@ const authService = {
 
   logout: async () => {
     try {
-      const response = await api.post('/logout');
+      const response = await axiosInstance.post('/logout');
       localStorage.clear();
       return response.data;
     } catch (error) {
@@ -136,7 +142,7 @@ const authService = {
 
   getCurrentUser: async () => {
     try {
-      const response = await api.get('/me');
+      const response = await axiosInstance.get('/me');
       return response.data;
     } catch (error) {
       console.error('Failed to get current user:', error);
@@ -146,7 +152,7 @@ const authService = {
 
   forgotPassword: async (email) => {
     try {
-      const response = await api.post('/forgot-password', { email });
+      const response = await axiosInstance.post('/forgot-password', { email });
       return response.data;
     } catch (error) {
       console.error('Failed to process forgot password:', error);
@@ -156,7 +162,7 @@ const authService = {
 
   resetPassword: async (resetToken, newPassword) => {
     try {
-      const response = await api.post('/reset-password', {
+      const response = await axiosInstance.post('/reset-password', {
         resetToken,
         newPassword
       });
@@ -169,7 +175,7 @@ const authService = {
 
   verifyEmail: async (token) => {
     try {
-      const response = await api.post('/verify-email', { token });
+      const response = await axiosInstance.post('/verify-email', { token });
       return response.data;
     } catch (error) {
       console.error('Failed to verify email:', error);
@@ -180,7 +186,7 @@ const authService = {
   refreshToken: async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken');
-      const response = await api.post('/refresh-token', { refreshToken });
+      const response = await axiosInstance.post('/refresh-token', { refreshToken });
       
       if (response.data.success) {
         localStorage.setItem('authToken', response.data.data.authToken);
@@ -195,7 +201,7 @@ const authService = {
 
   updateProfile: async (userData) => {
     try {
-      const response = await api.put('/me', userData);
+      const response = await axiosInstance.put('/me', userData);
       return response.data;
     } catch (error) {
       console.error('Failed to update profile:', error);
@@ -205,7 +211,7 @@ const authService = {
 
   changePassword: async (currentPassword, newPassword) => {
     try {
-      const response = await api.post('/change-password', {
+      const response = await axiosInstance.post('/change-password', {
         currentPassword,
         newPassword
       });
@@ -216,16 +222,5 @@ const authService = {
     }
   }
 };
-
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 export default authService;
