@@ -3,9 +3,9 @@ import { API_CONFIG } from './constants';
 
 const getBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return 'https://project-p-final-backend.vercel.app/api/v1';
+    return API_CONFIG.PROD_URL;
   }
-  return `http://localhost:${import.meta.env.VITE_BACKEND_PORT || '3001'}/api/v1`;
+  return API_CONFIG.BASE_URL;
 };
 
 const axiosInstance = axios.create({

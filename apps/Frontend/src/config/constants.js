@@ -16,8 +16,8 @@ export const APP_CONFIG = {
 };
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.DEV ? 'http://localhost:3000' : '',
-  PROD_URL: 'https://project-p-final-backend.vercel.app',
+  BASE_URL: devApiUrl,
+  PROD_URL: prodApiUrl,
   TIMEOUT: 60000,
   HEADERS: {
     'Content-Type': 'application/json',
@@ -26,14 +26,14 @@ export const API_CONFIG = {
   ENDPOINTS: {
     AUTH: {
       BASE: '/user',
-      LOGIN: '/login',
-      REGISTER: '/register',
-      LOGOUT: '/logout',
-      PROFILE: '/me',
-      FORGOT_PASSWORD: '/forgot-password',
-      RESET_PASSWORD: '/reset-password',
-      VERIFY_EMAIL: '/verify-email',
-      REFRESH_TOKEN: '/refresh-token'
+      LOGIN: '/user/login',
+      REGISTER: '/user/register',
+      LOGOUT: '/user/logout',
+      PROFILE: '/user/me',
+      FORGOT_PASSWORD: '/user/forgot-password',
+      RESET_PASSWORD: '/user/reset-password',
+      VERIFY_EMAIL: '/user/verify-email',
+      REFRESH_TOKEN: '/user/refresh-token'
     },
     STUDENT: {
       BASE: '/student',
