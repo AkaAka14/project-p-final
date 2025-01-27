@@ -28,6 +28,10 @@ export default defineConfig(({ command, mode }) => {
           rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
-    }
+    },
+    // Add base URL for production
+    base: isProduction ? '/' : '',
+    // Add environment variable handling
+    envPrefix: 'VITE_'
   }
 })
