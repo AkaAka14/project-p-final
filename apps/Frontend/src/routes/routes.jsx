@@ -166,6 +166,7 @@
 
 //testing after adding student part (working )
 
+import { element } from "prop-types";
 import { lazy } from "react";
 
 // Admin Pages
@@ -177,6 +178,7 @@ const JNFManagement = lazy(() => import("../pages/admin/JNFManagement"));
 const Placements = lazy(() => import("../pages/admin/Placements"));
 const Templates = lazy(() => import("../pages/admin/Templates"));
 const Reports = lazy(() => import("../pages/admin/Reports"));
+const Survey = lazy(() => import("../pages/admin/Survey"));
 const Profile = lazy(() => import("../pages/admin/Profile"));
 const Settings = lazy(() => import("../pages/admin/Settings"));
 const Audit = lazy(() => import("../pages/admin/Audit"));
@@ -222,6 +224,10 @@ const routes = [
       {
         path: 'placements',
         element: Placements,
+      },
+      {
+        path: 'survey',
+        element: Survey,
       },
       {
         path: "student",
