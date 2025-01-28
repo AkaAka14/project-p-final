@@ -179,6 +179,7 @@ const Placements = lazy(() => import("../pages/admin/Placements"));
 const Templates = lazy(() => import("../pages/admin/Templates"));
 const Reports = lazy(() => import("../pages/admin/Reports"));
 const Survey = lazy(() => import("../pages/admin/Survey"));
+const Query = lazy(() => import("../pages/admin/Query"));
 const Profile = lazy(() => import("../pages/admin/Profile"));
 const Settings = lazy(() => import("../pages/admin/Settings"));
 const Audit = lazy(() => import("../pages/admin/Audit"));
@@ -205,35 +206,13 @@ const routes = [
   {
     path: "/admin",
     children: [
-      {
-        path: 'dashboard',
-        element: Dashboard,
-      },
-      {
-        path: 'students',
-        element: Students,
-      },
-      {
-        path: 'companies',
-        element: Companies,
-      },
-      {
-        path: 'jnf',        // Added JNF route
-        element: JNFManagement,
-      },
-      {
-        path: 'placements',
-        element: Placements,
-      },
-      {
-        path: 'survey',
-        element: Survey,
-      },
       { path: "dashboard", element: Dashboard },
       { path: "students", element: Students },
       { path: "companies", element: Companies },
       { path: "jnf", element: JNFManagement },
       { path: "placements", element: Placements },
+      { path: 'survey', element: Survey,},
+      { path: 'query', element: Query,},
       { path: "notifications", element: Notifications },
       { path: "templates", element: Templates },
       { path: "automation", element: Automation },

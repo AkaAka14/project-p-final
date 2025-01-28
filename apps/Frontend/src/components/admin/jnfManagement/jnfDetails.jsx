@@ -65,6 +65,11 @@ const jnfDetails = [
       acceptedBy: '',
       reviewComments: '',
       reviewDate: '',
+      assignedUser:
+        { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+      assignedDate: '10-10-2021,10:30:00 a.m.',
+      assignedBy: 'admin123',
+      driveStatus: 'new',
     },
     {
       id: 2,
@@ -130,6 +135,11 @@ const jnfDetails = [
       acceptedBy: '',
       reviewComments: '',
       reviewDate: '',
+      assignedUser:
+        { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+      assignedDate: '10-10-2021,10:30:00 a.m.',
+      assignedBy: 'admin123',
+      driveStatus: 'new',
     },
     {
         id: 3,
@@ -195,6 +205,11 @@ const jnfDetails = [
         acceptedBy: '',
         reviewComments: '',
         reviewDate: '',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'completed',
       },
       {
         id: 4,
@@ -260,6 +275,11 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'completed',
       },{
         id: 5,
         // companyDetails: {
@@ -324,6 +344,11 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'ongoing',
       },
       {
         id: 6,
@@ -389,6 +414,11 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'new',
       },
       {
         id: 7,
@@ -454,6 +484,11 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'new',
       },
       {
         id: 8,
@@ -519,6 +554,12 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+
+        driveStatus: 'ongoing',
       },
       {
         id: 9,
@@ -584,6 +625,11 @@ const jnfDetails = [
         acceptedBy: '',
         reviewComments: '',
         reviewDate: '',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'ongoing',
       },
       {
         id: 10,
@@ -649,6 +695,11 @@ const jnfDetails = [
         acceptedBy: 'user789',
         reviewComments: '',
         reviewDate: '2024-04-20',
+        assignedUser:
+          { name: 'Yash', email: 'yash@530.com',designation: 'ICC'},
+        assignedDate: '10-10-2021,10:30:00 a.m.',
+        assignedBy: 'admin123',
+        driveStatus: 'completed',
       }
   ];
 

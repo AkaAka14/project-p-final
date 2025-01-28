@@ -44,7 +44,7 @@ const SurveyToolbar = ({
         borderRadius: 2,
       }}
     >
-      <Typography sx={{paddingBottom:3}} variant="h4">
+      <Typography color="primary" sx={{paddingBottom:3}} variant="h4">
         Survey Management
       </Typography>
       <Box
