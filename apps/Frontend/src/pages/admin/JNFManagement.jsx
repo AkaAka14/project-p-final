@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import JNFHeader from '../../components/admin/JNFManagement/JNFHeader';
+import JNFHeader from '../../components/admin/jnfManagement/JNFHeader';
 import CreateJNFDialog from '../../components/admin/jnfManagement/CreateJNFdialog';
 import ViewJNFDialog from '../../components/admin/jnfManagement/ViewJNFDialog';
 import JNFTable from '../../components/admin/jnfManagement/JNFTable';
