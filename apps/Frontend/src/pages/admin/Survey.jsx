@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import SurveyToolbar from "../../components/admin/Survey/SurveyToolbar";
-import SurveyList from "../../components/admin/Survey/SurveyList";
-import SurveyDialog from "../../components/admin/Survey/SurveyDialog";
+import SurveyToolbar from "../../components/admin/survey/SurveyToolbar";
+import SurveyList from "../../components/admin/survey/SurveyList";
+import SurveyDialog from "../../components/admin/survey/SurveyDialog";
 
 const Survey = () => {
   const [allSurveys, setAllSurveys] = useState([
