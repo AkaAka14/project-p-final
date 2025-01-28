@@ -6,7 +6,7 @@
 
 // export const API_BASE_URL = isProduction ? prodApiUrl : devApiUrl;
 // export const API_TIMEOUT = 30000; 
-export const API_BASE_URL = import.meta.env.VITE_API_URL;
+export const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/v1`;
 // App Configuration
 export const APP_CONFIG = {
   name: 'PMS Admin',
