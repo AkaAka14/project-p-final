@@ -38,7 +38,7 @@ const routes = [
       { path: "dashboard", element: Dashboard },
       { path: "students", element: Students },
       { path: "companies", element: Companies },
-      { path: "jnf", element: JNF },
+      { path: "jnf", element: JNFManagement },
       { path: "placements", element: Placements },
       { path: "notifications", element: Notifications },
       { path: "templates", element: Templates },
