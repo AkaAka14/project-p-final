@@ -229,21 +229,36 @@ const routes = [
         path: 'survey',
         element: Survey,
       },
+      { path: "dashboard", element: Dashboard },
+      { path: "students", element: Students },
+      { path: "companies", element: Companies },
+      { path: "jnf", element: JNFManagement },
+      { path: "placements", element: Placements },
+      { path: "notifications", element: Notifications },
+      { path: "templates", element: Templates },
+      { path: "automation", element: Automation },
+      { path: "audit", element: Audit },
+      { path: "reports", element: Reports },
+      { path: "profile", element: Profile },
+      { path: "settings", element: Settings },
+    ],
+  },
+  {
+    path: "/auth",
+    children: [
       {
         path: "student",
         children: [
           {
             path: "login",
-            element: lazy(
-              () =>
-                import("../components/student/auth_referal_for_student/Login")
+            element: lazy(() =>
+              import("../components/student/auth_referal_for_student/Login")
             ),
           },
           {
             path: "signup",
-            element: lazy(
-              () =>
-                import("../components/student/auth_referal_for_student/Signup")
+            element: lazy(() =>
+              import("../components/student/auth_referal_for_student/Signup")
             ),
           },
         ],
@@ -258,13 +273,17 @@ const routes = [
       },
       {
         path: "admin",
-        children: [{ path: "login", element: Login }],
+        children: [
+          { path: "login", element: Login }
+        ],
       },
     ],
   },
   {
     path: "/company",
-    children: [{ path: "dashboard", element: CompanyDashboard }],
+    children: [
+      { path: "dashboard", element: CompanyDashboard }
+    ],
   },
   {
     path: "/student",
@@ -275,39 +294,32 @@ const routes = [
         children: [
           {
             path: "profile",
-            element: lazy(
-              () =>
-                import("../components/student/sections/Profile/ProfileSection")
+            element: lazy(() =>
+              import("../components/student/sections/Profile/ProfileSection")
             ),
           },
           {
             path: "profile/edit",
-            element: lazy(
-              () =>
-                import(
-                  "../components/student/sections/Profile/ProfileEdit/ProfileEdit"
-                )
+            element: lazy(() =>
+              import("../components/student/sections/Profile/ProfileEdit/ProfileEdit")
             ),
           },
           {
             path: "applications",
-            element: lazy(
-              () =>
-                import(
-                  "../components/student/sections/Applications/ApplicationSection"
-                )
+            element: lazy(() =>
+              import("../components/student/sections/Applications/ApplicationSection")
             ),
           },
           {
             path: "jobs",
-            element: lazy(
-              () => import("../components/student/sections/jobs/JobSection")
+            element: lazy(() =>
+              import("../components/student/sections/jobs/JobSection")
             ),
           },
           {
             path: "notifications",
-            element: lazy(
-              () => import("../components/student/sections/NotificationSection")
+            element: lazy(() =>
+              import("../components/student/sections/NotificationSection")
             ),
           },
         ],
