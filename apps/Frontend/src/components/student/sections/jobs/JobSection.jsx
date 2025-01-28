@@ -26,7 +26,7 @@ console.log("studentId",studentId)
   const fetchEligibleJobs = async () => {
     try {
       const response = await axios.get(
-        `/student/eligible-jobs/${studentId}`
+        `/api/v1/student/eligible-jobs/${studentId}`
         // `/jobroutes/bulk`
       );
       setJobs(response.data.data);

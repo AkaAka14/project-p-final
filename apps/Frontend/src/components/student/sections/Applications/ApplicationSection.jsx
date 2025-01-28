@@ -27,7 +27,7 @@ const ApplicationsSection = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `/student/applications/${studentId}`
+        `/api/v1/student/applications/${studentId}`
       );
       setApplications(response.data.data);
       setError(null);
