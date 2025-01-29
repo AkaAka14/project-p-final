@@ -1,15 +1,10 @@
 import axios from 'axios';
 import { API_CONFIG } from './constants';
+import { API_BASE_URL } from './constants';
 
-const getBaseUrl = () => {
-  if (import.meta.env.PROD) {
-    return API_CONFIG.PROD_URL;
-  }
-  return API_CONFIG.BASE_URL;
-};
 
 const axiosInstance = axios.create({
-  baseURL: getBaseUrl(),
+  baseURL: API_BASE_URL,
   timeout: API_CONFIG.TIMEOUT,
   headers: API_CONFIG.HEADERS,
   withCredentials: true
@@ -17,7 +12,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
