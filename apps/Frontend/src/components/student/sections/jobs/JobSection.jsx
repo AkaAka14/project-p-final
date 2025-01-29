@@ -25,10 +25,8 @@ const JobSection = () => {
 console.log("studentId",studentId)
   const fetchEligibleJobs = async () => {
     try {
-      const response = await axios.get(
-        `/api/v1/student/eligible-jobs/${studentId}`
-        // `/jobroutes/bulk`
-      );
+      const response = await axios.get(`/student/eligible-jobs/${studentId}`);
+      // Remove /api/v1 since it's now in baseURL
       setJobs(response.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch jobs");
